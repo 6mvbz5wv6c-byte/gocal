@@ -27,5 +27,17 @@
   },
   "observability": {
     "enabled": false
-  }
+  },
+  "routes": [
+    {
+      "pattern": "findout.events",
+      "custom_domain": true,
+      "zone_id": "660590c316924ea92a76c1890b0d84d8"
+    },
+    {
+      "pattern": "www.findout.events",
+      "custom_domain": true,
+      "zone_id": "660590c316924ea92a76c1890b0d84d8"
+    }
+  ]
 }

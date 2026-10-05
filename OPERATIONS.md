@@ -2,7 +2,7 @@
 
 FindOut now has a Cloudflare Worker API and D1 database. GitHub contains the source; the dynamic website deploys with Wrangler. GitHub Pages alone cannot serve the API.
 
-The apex/www domain attachment is pending removal of the old GitHub Pages DNS records. `deployment-domains.json` contains the desired custom domains; merge it into Wrangler’s `routes` after that cleanup. Until then, use https://findout.6mvbz5wv6c.workers.dev.
+Live site: https://findout.events. Management: https://findout.events/admin. Both apex and www are attached to the FindOut Worker with valid HTTPS. `wrangler.jsonc` contains the custom domains. The workers.dev address remains available as an alternate origin.
 
 ## Deploy
 
