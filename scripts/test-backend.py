@@ -21,7 +21,7 @@ queue,_=call('admin/events');event=next(e for e in queue['events'] if e['title']
 edit={'id':event['id'],'revision':event['revision'],'event':event,'action':'approve','confirmed':False}
 call('admin/event',edit,400);edit['confirmed']=True;call('admin/event',edit);call('admin/event',edit,409)
 public,_=call('events');record=next(e for e in public['events'] if e['id']==event['id']);assert 'evidence' not in record and 'reviewed_by' not in record
-record,_=call('admin/events?status=approved');approved=next(e for e in record['events'] if e['id']==event['id']);call('admin/source-summary',{'id':approved['id'],'revision':approved['revision']});updated,_=call('admin/events?status=approved');updated=next(e for e in updated['events'] if e['id']==event['id']);assert updated['status']=='approved' and updated['sourceSummary'] and updated['revision']==approved['revision']+1
+record,_=call('admin/events?status=approved');approved=next(e for e in record['events'] if e['id']==event['id']);call('admin/source-summary',{'id':approved['id'],'revision':approved['revision'],'cleanDescription':True});updated,_=call('admin/events?status=approved');updated=next(e for e in updated['events'] if e['id']==event['id']);assert updated['status']=='approved' and updated['sourceSummary']==updated['description'] and updated['revision']==approved['revision']+1
 call('reports',{'eventId':event['id'],'reason':'incorrect','details':'Test report'})
 t,_=call('admin/tokens',{'label':'Local test '+stamp});t=t['token'];saved_cookie=cookie;cookie=''
 call('admin/events',expected=401,bearer=t)
