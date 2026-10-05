@@ -15,7 +15,7 @@ def call(path,payload=None,expected=200,origin=BASE,bearer=None):
 call('health');call('admin/events',expected=401);call('login',login,expected=403,origin='https://evil.example')
 _,headers=call('login',login);cookie=headers['Set-Cookie'].split(';')[0];assert 'HttpOnly' in headers['Set-Cookie'] and 'Secure' in headers['Set-Cookie'] and 'SameSite=Strict' in headers['Set-Cookie']
 call('session');existing,_=call('admin/events');assert len(existing['events'])>=37
-stamp=secrets.token_hex(3);data={'title':'LOCAL TEST '+stamp,'date':'2026-11-09','time':'17:00','venue':'Test Venue','address':'1 Test St, Fayetteville, AR','category':'community','price':'Free','description':'Synthetic local integration fixture.','source':'https://example.org/','status':'approved','score':100}
+stamp=secrets.token_hex(3);data={'title':'LOCAL TEST '+stamp,'date':'2026-11-09','time':'17:00','endTime':'18:00','recurrence':'single','organizerName':'Test Organizer','organizerUrl':'https://example.org/','venue':'Test Venue','address':'1 Test St, Fayetteville, AR','category':'community','price':'Free','description':'Synthetic local integration fixture.','source':'https://example.org/','status':'approved','score':100}
 call('events',data,201);public,_=call('events');assert not any(e['title']==data['title'] for e in public['events'])
 queue,_=call('admin/events');event=next(e for e in queue['events'] if e['title']==data['title']);assert event['score'] is None
 edit={'id':event['id'],'revision':event['revision'],'event':event,'action':'approve','confirmed':False}

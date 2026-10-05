@@ -2,7 +2,7 @@
 
 FindOut now has a Cloudflare Worker API and D1 database. GitHub contains the source; the dynamic website deploys with Wrangler. GitHub Pages alone cannot serve the API.
 
-Live site: https://findout.events. Management: https://findout.events/admin. Both apex and www are attached to the FindOut Worker with valid HTTPS. `wrangler.jsonc` contains the custom domains. The workers.dev address remains available as an alternate origin.
+Live site: https://findout.events. Location chooser: https://findout.events. Calendar: https://findout.events/fayetteville. Management: https://findout.events/admin. Both apex and www are attached to the FindOut Worker with valid HTTPS. `wrangler.jsonc` contains the custom domains. The workers.dev address remains available as an alternate origin.
 
 ## Deploy
 
@@ -42,7 +42,7 @@ Local model setup and an unattended crawler are NOT installed by this deployment
 - At most 20 candidates per request, 64 KB request body, and 24 ingestion batches per day across all agents. Exact normalized title/date/time/venue fingerprints deduplicate repeated imports.
 - Server ignores requested publication state; every insertion is pending.
 
-Use `scripts/push-candidates.py crawl.json --site https://findout.events` with `FINDOUT_AGENT_TOKEN` set privately in the local environment. The importer batches ten candidates per request. A future local worker should respect robots/terms, restrict outgoing targets to public addresses, keep fetched content as untrusted data, bound fetching and model context, and never expose its token or shell to retrieved instructions. No cloud LLM fallback exists.
+Use `scripts/push-candidates.py crawl.json --site https://findout.events` with `FINDOUT_AGENT_TOKEN` set privately in the local environment. The importer sends one enriched candidate per request to stay within the free-tier query budget. After a daily limit, resume with `--start-index N` for the first unsent zero-based record. Oversized evidence/trace batches are rejected before writes. A future local worker should respect robots/terms, restrict outgoing targets to public addresses, keep fetched content as untrusted data, bound fetching and model context, and never expose its token or shell to retrieved instructions. No cloud LLM fallback exists.
 
 ## Costs and limits
 
@@ -50,7 +50,7 @@ No paid plan is enabled by these deployment scripts. There is no Droplet, paid e
 
 Application write limits: community submissions 5/hour/IP and 200/day globally; reports 5/hour/IP and 200/day globally; agent batches 24/day; admin requests 600/hour/account. These are abuse controls, not a provider-wide dollar cap. Cloudflare platform quotas remain the outer bound. Public pages use static asset delivery; API reads are indexed and bounded.
 
-A daily cleanup removes expired sessions/rate counters and old crawl logs (90 days) / audit entries (365 days). It does not perform crawling or delete calendar records. Export data periodically. For a full SQL backup:
+A daily cleanup removes expired sessions/rate counters only. Crawl evidence and approval history are retained; monitor D1 storage and keep private backups. It does not perform crawling or delete calendar records. Export data periodically. For a full SQL backup:
 
 ```sh
 npx wrangler d1 export findout-production --remote --output /path/to/private-backup.sql
@@ -61,3 +61,7 @@ That file includes authentication hashes: store it privately, not in Git. D1 Tim
 ## Validation
 
 `npm run build` checks TypeScript and compiles the frontend. `scripts/test-backend.py` targets only localhost:8794 and uses synthetic data to check authentication, CSRF, pending-only ingestion, moderation confirmation, revision conflicts, reports, token revocation, export, and logout. Never point the fixture suite at production. Live checks should read health and counts and test owner sign-in/out without publishing fixtures.
+
+## Review dashboard and schema
+
+See `DATA_MODEL.md` for relational tables, provenance, analytics views, field completeness, and test coverage. The dashboard has one event per row with Approve, Deny, Modify and evidence preview. Clicking Approve is an explicit human publication decision. Unknown fields and ambiguous facts must be resolved first. The extraction component is tested; an unattended local model/crawler service is still not installed.
