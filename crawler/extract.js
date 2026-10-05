@@ -1,4 +1,4 @@
-import {reviewIssues,evidenceQuality} from '../src/lib/review.js';
+import {reviewIssues,evidenceQuality,isOvernightOccurrence} from '../src/lib/review.js';
 import {validateResearch} from '../server/records.js';
 const normalize=s=>String(s||'').normalize('NFKC').toLowerCase().replace(/[^\p{L}\p{N}]+/gu,' ').trim();
 const plain=s=>typeof s==='string'?s.replace(/<script\b[^>]*>[\s\S]*?<\/script>/gi,'').replace(/<[^>]*>/g,'').trim():'';
@@ -23,6 +23,7 @@ export function extractEvent({document,expectedTitle,url,fetchedAt=new Date().to
  const address=typeof addr==='string'?plain(addr):[addr.streetAddress,addr.addressLocality,addr.addressRegion,addr.postalCode].map(plain).filter(Boolean).join(', ');
  const e={title:plain(v.name),date:start.date,time:start.time,endDate:end.date||'',endTime:end.time,timezone:'America/Chicago',venue:plain(loc.name),address,category,description:plain(v.description),source:safeURL(url),organizerName:plain(org.name),organizerUrl:safeURL(org.url),organizerEmail:plain(org.email),organizerPhone:plain(org.telephone),recurrence:end.date&&end.date!==start.date?'range':start.date?'single':'unknown',rrule:'',organizerType:'crawl',status:'pending',uncertainFields:[],price:'Check organizer',evidence:''};
  if(e.date===e.endDate&&e.time===e.endTime)e.endTime=''; // Common calendar placeholder, not a real duration.
+ if(isOvernightOccurrence(e))e.recurrence='single';
  if(typeof addr==='object'&&addr.addressLocality&&!allowedCities.map(normalize).includes(normalize(addr.addressLocality)))e.uncertainFields.push('address');
  if(typeof addr==='object'&&addr.addressRegion&&!['ar','arkansas'].includes(normalize(addr.addressRegion)))e.uncertainFields.push('address');
  if(/\b(cancelled|canceled|postponed)\b/i.test(e.title)||/Cancelled|Canceled|Postponed/i.test(v.eventStatus||''))e.uncertainFields.push('date');

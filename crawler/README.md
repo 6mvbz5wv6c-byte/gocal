@@ -49,3 +49,18 @@ exact evidence quotes, but must pass the same validation and human review.
 
 `tests/listings.test.mjs` uses the exact three-event user example plus boundary,
 year, weekday, truncation, cancellation, time, duplicate, and evidence tests.
+
+## Reconcile before import
+
+`reconcileCandidates(candidates, existing)` in `reconcile.js` compares the extracted
+candidates against **all statuses**, including rejected and removed records. Each
+candidate may have `{event, aliases}`; aliases must be exact names from that
+card's linked detail page. Same venue, date, start and captured name identify an
+existing occurrence even when a listing title includes supporting artists.
+
+The result separates `add`, `matched`, and `conflicts`. Only unmatched candidates
+enter new pending intake. Approved/rejected/removed matches remain unchanged;
+pending enrichment requires a fresh revision and the API's `enrich` action.
+Different start times or multiple matching rows require manual reconciliation.
+A later performance on a different date remains a separate occurrence. Read the
+current database again before applying a plan and preserve concurrent edits.
