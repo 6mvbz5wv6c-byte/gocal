@@ -1,11 +1,4 @@
-export const categories = [
- {id:'music',name:'Music & nightlife',color:'#285db4',bg:'#e1edffde'},
- {id:'arts',name:'Arts & making',color:'#a94912',bg:'#ffecd9e8'},
- {id:'community',name:'Community',color:'#12618b',bg:'#dff4ffe3'},
- {id:'outdoors',name:'Outdoors & movement',color:'#396b87',bg:'#e6f0f8e8'},
- {id:'food',name:'Food & drink',color:'#a24530',bg:'#ffe5dce5'},
- {id:'learning',name:'Classes & learning',color:'#795506',bg:'#fff3bfe5'},
-];
+export {categories} from './categories.js';
 export type CalEvent={id:string;title:string;date:string;time:string;endTime?:string;endDate?:string;recurrence?:string;organizerName?:string;organizerUrl?:string;organizerEmail?:string;organizerPhone?:string;venue:string;address?:string;category:string;price:string;description:string;sourceSummary?:string;source?:string;sample?:boolean;status?:string;score?:number;evidence?:string;organizerType?:string};
 const examples=[
  ['Open mic, open minds','music','18:30','The neighborhood coffeehouse','Free','A little music, a little poetry, and a room full of new faces. Bring something to share or just come listen.'],
