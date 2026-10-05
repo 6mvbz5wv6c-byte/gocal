@@ -1,0 +1,31 @@
+{
+  "name": "findout",
+  "main": "server/worker.js",
+  "compatibility_date": "2026-05-22",
+  "account_id": "0e675f94009c81e7559ae23cd6706376",
+  "workers_dev": true,
+  "assets": {
+    "directory": "./docs",
+    "binding": "ASSETS",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": [
+      "/api/*"
+    ]
+  },
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "findout-production",
+      "database_id": "a10bd1ba-1b3e-4ae1-9638-a43dbe24d9fb",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "triggers": {
+    "crons": [
+      "15 8 * * *"
+    ]
+  },
+  "observability": {
+    "enabled": false
+  }
+}

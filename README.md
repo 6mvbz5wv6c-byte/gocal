@@ -1,3 +1,7 @@
+# FindOut! live calendar
+
+Production is now a Cloudflare Worker + D1 application. See [OPERATIONS.md](OPERATIONS.md) for deployment, review, local-agent ingestion, backups, and cost limits. The legacy static setup below is retained for migration reference and is not the production deployment path.
+
 # FindOut! — public GitHub Pages edition
 
 This version opens publicly with no GPT account or other login required to browse. It contains the Fayetteville calendar, category filters, month/agenda views, event details, and sharing. It is a static edition of the private pilot, not a deployment of the backend.

@@ -1,0 +1,15 @@
+PRAGMA foreign_keys=ON;
+CREATE TABLE users(id TEXT PRIMARY KEY, email TEXT NOT NULL UNIQUE, role TEXT NOT NULL CHECK(role IN ('admin','moderator')), password_hash TEXT NOT NULL, salt TEXT NOT NULL, enabled INTEGER NOT NULL DEFAULT 1, created_at TEXT NOT NULL);
+CREATE TABLE sessions(hash TEXT PRIMARY KEY, user_id TEXT NOT NULL REFERENCES users(id), expires INTEGER NOT NULL);
+CREATE INDEX sessions_expiry ON sessions(expires);
+CREATE TABLE events(id TEXT PRIMARY KEY, title TEXT NOT NULL, date TEXT NOT NULL, time TEXT NOT NULL DEFAULT '', end_time TEXT, end_date TEXT, venue TEXT NOT NULL, address TEXT NOT NULL DEFAULT '', category TEXT NOT NULL, price TEXT NOT NULL DEFAULT 'Check organizer', description TEXT NOT NULL DEFAULT '', source TEXT NOT NULL DEFAULT '', evidence TEXT NOT NULL DEFAULT '', score INTEGER, status TEXT NOT NULL DEFAULT 'pending' CHECK(status IN ('pending','approved','rejected','removed')), organizer_type TEXT NOT NULL DEFAULT 'community', fingerprint TEXT UNIQUE, revision INTEGER NOT NULL DEFAULT 1, created_at TEXT NOT NULL, updated_at TEXT NOT NULL, reviewed_by TEXT, reviewed_at TEXT);
+CREATE INDEX events_status_date ON events(status,date,id);
+CREATE TABLE reports(id TEXT PRIMARY KEY,event_id TEXT NOT NULL REFERENCES events(id),reason TEXT NOT NULL,details TEXT NOT NULL,status TEXT NOT NULL DEFAULT 'open',created_at TEXT NOT NULL);
+CREATE INDEX reports_status ON reports(status,created_at);
+CREATE TABLE sources(id TEXT PRIMARY KEY,name TEXT NOT NULL,url TEXT NOT NULL UNIQUE,enabled INTEGER NOT NULL DEFAULT 1,notes TEXT NOT NULL DEFAULT '');
+CREATE TABLE agent_tokens(hash TEXT PRIMARY KEY,label TEXT NOT NULL,enabled INTEGER NOT NULL DEFAULT 1,created_at TEXT NOT NULL);
+CREATE TABLE crawl_runs(id TEXT PRIMARY KEY,agent TEXT NOT NULL,summary TEXT NOT NULL,candidates INTEGER NOT NULL,created_at TEXT NOT NULL);
+CREATE TABLE audit(id TEXT PRIMARY KEY,actor TEXT NOT NULL,action TEXT NOT NULL,target TEXT NOT NULL,details TEXT NOT NULL DEFAULT '',created_at TEXT NOT NULL);
+CREATE INDEX audit_date ON audit(created_at);
+CREATE TABLE rate_limits(key TEXT PRIMARY KEY,count INTEGER NOT NULL,expires INTEGER NOT NULL);
+CREATE INDEX rate_expiry ON rate_limits(expires);
