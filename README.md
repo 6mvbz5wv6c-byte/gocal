@@ -1,4 +1,4 @@
-# GoCal — public GitHub Pages edition
+# FindOut! — public GitHub Pages edition
 
 This version opens publicly with no GPT account or other login required to browse. It contains the Fayetteville calendar, category filters, month/agenda views, event details, and sharing. It is a static edition of the private pilot, not a deployment of the backend.
 
@@ -83,7 +83,7 @@ Build an update:
 ```sh
 npm run build
 git add src public docs package.json package-lock.json
-git commit -m "Update GoCal"
+git commit -m "Update FindOut!"
 git push
 ```
 
