@@ -24,3 +24,5 @@ const examples=[
 export function sampleEvents():CalEvent[]{return Array.from({length:37},(_,i)=>{const a=examples[i%examples.length];const day=1+((i*5+Math.floor(i/12))%31);return {id:`sample-${i}`,title:a[0],category:a[1],time:a[2],venue:a[3],price:a[4],description:a[5],date:`2026-10-${String(day).padStart(2,'0')}`,sample:true};}).sort((a,b)=>(a.date+a.time).localeCompare(b.date+b.time));}
 export function timeLabel(time:string){if(!/^\d{2}:\d{2}$/.test(time))return 'Time unconfirmed';const [h,m]=time.split(':').map(Number);return `${h%12||12}${m?':'+String(m).padStart(2,'0'):''}${h>=12?'pm':'am'}`;}
 export function localDate(d:Date){return `${d.getFullYear()}-${String(d.getMonth()+1).padStart(2,'0')}-${String(d.getDate()).padStart(2,'0')}`;}
+
+export function priceLabel(price?:string){const value=price?.trim()||'';return /^(?:check organizer|unknown|tbd|tba|unable to determine)[.!]?$/i.test(value)?'':value;}
