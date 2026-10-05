@@ -14,7 +14,7 @@ function nodes(v){if(Array.isArray(v))return v.flatMap(nodes);if(!v||typeof v!==
 function safeURL(s){try{const u=new URL(s);return u.protocol==='https:'&&!u.username&&!u.password?u.href:''}catch{return ''}}
 // Deterministic extraction boundary. A local LLM may propose additional fields with exact
 // quotes, but cannot change review status or bypass the same quality gate.
-export function extractEvent({document,expectedTitle,url,fetchedAt=new Date().toISOString(),category='community'}){
+export function extractEvent({document,expectedTitle,url,fetchedAt=new Date().toISOString(),category='community',allowedCities=['Fayetteville']}){
  if(!safeURL(url))throw Error('HTTPS source required');
  const list=nodes(document).filter(v=>[v['@type']].flat().some(t=>/^(https?:\/\/schema.org\/)?(Event|MusicEvent|TheaterEvent|EducationEvent|SocialEvent|ExhibitionEvent)$/.test(t)));
  const matches=list.filter(v=>normalize(v.name)===normalize(expectedTitle));
@@ -23,9 +23,9 @@ export function extractEvent({document,expectedTitle,url,fetchedAt=new Date().to
  const address=typeof addr==='string'?plain(addr):[addr.streetAddress,addr.addressLocality,addr.addressRegion,addr.postalCode].map(plain).filter(Boolean).join(', ');
  const e={title:plain(v.name),date:start.date,time:start.time,endDate:end.date||'',endTime:end.time,timezone:'America/Chicago',venue:plain(loc.name),address,category,description:plain(v.description),source:safeURL(url),organizerName:plain(org.name),organizerUrl:safeURL(org.url),organizerEmail:plain(org.email),organizerPhone:plain(org.telephone),recurrence:end.date&&end.date!==start.date?'range':start.date?'single':'unknown',rrule:'',organizerType:'crawl',status:'pending',uncertainFields:[],price:'Check organizer',evidence:''};
  if(e.date===e.endDate&&e.time===e.endTime)e.endTime=''; // Common calendar placeholder, not a real duration.
- if(typeof addr==='object'&&addr.addressLocality&&normalize(addr.addressLocality)!=='fayetteville')e.uncertainFields.push('address');
+ if(typeof addr==='object'&&addr.addressLocality&&!allowedCities.map(normalize).includes(normalize(addr.addressLocality)))e.uncertainFields.push('address');
  if(typeof addr==='object'&&addr.addressRegion&&!['ar','arkansas'].includes(normalize(addr.addressRegion)))e.uncertainFields.push('address');
- if(v.eventStatus&&/Cancelled|Postponed/.test(v.eventStatus))e.uncertainFields.push('date');
+ if(/\b(cancelled|canceled|postponed)\b/i.test(e.title)||/Cancelled|Canceled|Postponed/i.test(v.eventStatus||''))e.uncertainFields.push('date');
  const text=JSON.stringify(v,null,2),claims=[];
  const proof={title:v.name,date:v.startDate,time:start.time?v.startDate:null,endDate:v.endDate,endTime:e.endTime?v.endDate:null,venue:loc.name,address:loc.address,organizerName:org.name,organizerUrl:org.url,organizerEmail:org.email,organizerPhone:org.telephone,description:v.description,recurrence:v.startDate};
  for(const [field,value]of Object.entries(proof)){if(!e[field]||!value)continue;const quote=typeof value==='object'?JSON.stringify(value.streetAddress||value.addressLocality||''):JSON.stringify(value);if(quote&&text.includes(quote))claims.push({field,url,quote,method:'structured'});}

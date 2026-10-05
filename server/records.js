@@ -16,9 +16,10 @@ export function extendedInput(b){
 export async function recordStatements(env,e,eventId,revision,research,runId,decisionId){
  const q=(s,...args)=>env.DB.prepare(s).bind(...args),out=[];
  const guard='EXISTS(SELECT 1 FROM events WHERE id=? AND revision=?)'+(decisionId?' AND EXISTS(SELECT 1 FROM moderation_decisions WHERE id=?)':''),g=[eventId,revision,...(decisionId?[decisionId]:[])];
+ const city=/\bBentonville\b/i.test(e.address)?'Bentonville':/\bRogers\b/i.test(e.address)?'Rogers':'Fayetteville';
  const vk=[e.venue,e.address].map(v=>v.trim().toLowerCase()).join('|'),vid=await digest(vk);
- out.push(q(`INSERT OR IGNORE INTO venues(id,identity_key,name,address) SELECT ?,?,?,? WHERE ${guard}`,vid,vk,e.venue,e.address,...g));
- let ok='',oid='';if(e.organizerName){ok=[e.organizerName,e.organizerUrl,e.organizerEmail,e.organizerPhone].map(v=>v.toLowerCase()).join('|');oid=await digest(ok);out.push(q(`INSERT OR IGNORE INTO organizers VALUES(?,?,?,?,?,?)`,oid,ok,e.organizerName,e.organizerUrl,e.organizerEmail,e.organizerPhone));}
+ out.push(q(`INSERT OR IGNORE INTO venues(id,identity_key,name,address,city) SELECT ?,?,?,?,? WHERE ${guard}`,vid,vk,e.venue,e.address,city,...g));
+ let ok='',oid='';if(e.organizerName){ok=[e.organizerName,e.organizerUrl,e.organizerEmail,e.organizerPhone].map(v=>v.toLowerCase()).join('|');oid=await digest(ok);out.push(q(`INSERT OR IGNORE INTO organizers SELECT ?,?,?,?,?,? WHERE ${guard}`,oid,ok,e.organizerName,e.organizerUrl,e.organizerEmail,e.organizerPhone,...g));}
  out.push(q(`UPDATE events SET venue_id=(SELECT id FROM venues WHERE identity_key=?),organizer_id=?,timezone=?,recurrence=?,rrule=?,uncertain_fields=? WHERE id=? AND ${guard}`,vk,oid||null,e.timezone,e.recurrence,e.rrule,JSON.stringify(e.uncertainFields),eventId,...g));
  out.push(q(`DELETE FROM event_categories WHERE event_id=? AND ${guard}`,eventId,...g));
  out.push(q(`INSERT INTO event_categories SELECT ?,? WHERE ${guard}`,eventId,e.category,...g));
@@ -26,8 +27,8 @@ export async function recordStatements(env,e,eventId,revision,research,runId,dec
  if(!research)return out;
  const refs=new Map();
  for(const s of research.snapshots){const h=await digest(s.text),sid=await digest(s.url+'|'+h),sourceId=await digest(s.url);refs.set(s.url,sid);
- out.push(q('INSERT OR IGNORE INTO sources VALUES(?,?,?,0,?)',sourceId,new URL(s.url).hostname,s.url,'Captured evidence; enable explicitly for routine crawling.'));
- out.push(q('INSERT OR IGNORE INTO source_snapshots VALUES(?,(SELECT id FROM sources WHERE url=?),?,?,?,?,?)',sid,s.url,s.url,s.fetchedAt,h,s.text,s.status));}
+ out.push(q(`INSERT OR IGNORE INTO sources SELECT ?,?,?,0,? WHERE ${guard} AND NOT EXISTS(SELECT 1 FROM sources WHERE url=?)`,sourceId,new URL(s.url).hostname,s.url,'Captured evidence; enable explicitly for routine crawling.',...g,s.url));
+ out.push(q(`INSERT OR IGNORE INTO source_snapshots SELECT ?,(SELECT id FROM sources WHERE url=? LIMIT 1),?,?,?,?,? WHERE ${guard}`,sid,s.url,s.url,s.fetchedAt,h,s.text,s.status,...g));}
  for(const c of research.claims)out.push(q(`INSERT OR IGNORE INTO event_evidence SELECT ?,?,?,?,?,? WHERE ${guard}`,eventId,revision,c.field,refs.get(c.url),c.quote,c.method,...g));
  if(runId)for(const [i,s]of research.steps.entries())out.push(q(`INSERT INTO crawl_steps SELECT ?,?,?,?,?,?,?,?,? WHERE ${guard}`,uuid(),runId,eventId,i,s.stage,s.rule,s.outcome,s.detail,new Date().toISOString(),...g));
  return out;

@@ -21,3 +21,10 @@
 .review-table-scroll{max-height:460px;overflow:auto}.review-table th{position:sticky;top:0;z-index:1}.review-workspace{scroll-margin-top:20px}.management>.event-form{max-width:600px}
 
 @media(max-width:767px){.header-location p{font-size:11px}}
+
+/* Region calendar clarity and compact navigation. */
+.header-location p{font-weight:750;color:#354e3e}.view-control .search{background:#eaf0e9;border:1px solid #d6e1d4;border-radius:10px;padding:9px 12px;transition:background .16s,border-color .16s}.view-control .search:focus-within{background:#fff;border-color:#6f9779;box-shadow:0 0 0 3px #70977816}.month-control>button{border-radius:8px;transition:background .16s,color .16s,box-shadow .16s}.month-control>button:hover{background:#e5ede3;color:#23644a;box-shadow:0 2px 6px #284d3510}.month-control>button:focus-visible{outline:2px solid #60946e;outline-offset:3px}.gocal-sidebar .category-heading{margin-top:20px}.event-source-summary{background:#f0f5ed;border-left:3px solid #b6ceb3;border-radius:0 9px 9px 0;padding:13px 15px;margin:16px 0;font-size:14px;line-height:1.7;color:#536d59}
+@media(prefers-reduced-motion:reduce){.view-control .search,.month-control>button{transition:none}}
+
+@media(max-width:480px){.topbar .header-actions{flex-shrink:0}.topbar .header-actions .primary{width:40px;height:40px;padding:0;justify-content:center}.topbar .submit-label{display:none}.topbar .header-actions .primary svg{width:18px;height:18px}.topbar>div:first-child{gap:6px}.header-location p{font-size:11px}}
+@media(max-width:359px){.header-location p{font-size:9.5px}.topbar{padding-inline:8px;gap:4px}.topbar .mobile-menu{margin-right:0}}

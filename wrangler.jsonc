@@ -39,5 +39,31 @@
       "custom_domain": true,
       "zone_id": "660590c316924ea92a76c1890b0d84d8"
     }
+  ],
+  "ratelimits": [
+    {
+      "name": "PUBLIC_WRITE_BURST",
+      "namespace_id": "7270101",
+      "simple": {
+        "limit": 3,
+        "period": 60
+      }
+    },
+    {
+      "name": "API_READ_BURST",
+      "namespace_id": "7270102",
+      "simple": {
+        "limit": 120,
+        "period": 60
+      }
+    },
+    {
+      "name": "API_WRITE_BURST",
+      "namespace_id": "7270103",
+      "simple": {
+        "limit": 60,
+        "period": 60
+      }
+    }
   ]
 }

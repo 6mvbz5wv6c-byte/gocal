@@ -21,7 +21,7 @@ b={'id':eid,'revision':record['revision'],'event':dict(e,research=research),'act
 call('admin/event',b)
 proof,_=call('admin/evidence?id='+eid);assert proof['snapshots'][0]['content_text']==source;assert len(proof['claims'])==1;assert proof['history'][0]['action']=='enrich'
 queue,_=call('admin/events');record=next(x for x in queue['events'] if x['id']==eid);assert record['organizerEmail']=='fixture@example.org';assert next(x for x in queue['events'] if x['id']=='FO-019')==untouched
-call('admin/event',dict(b,revision=record['revision'],action='approve',confirmed=True,event=dict(record,endTime='')),400)
+call('admin/event',dict(b,revision=record['revision'],action='approve',confirmed=True,event=dict(record,endTime='17:00')),400)
 forged=json.loads(json.dumps(research));forged['claims'][0]['quote']='invented'
 call('admin/event',dict(b,revision=record['revision'],event=dict(record,research=forged)),400)
 oversized=json.loads(json.dumps(research));oversized['claims']*=30;oversized['steps']*=20

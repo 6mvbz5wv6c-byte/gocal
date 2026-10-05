@@ -6,7 +6,7 @@ export const categories = [
  {id:'food',name:'Food & drink',color:'#ce4d73',bg:'#fbe5ed'},
  {id:'learning',name:'Classes & learning',color:'#368a99',bg:'#e3f3f5'},
 ];
-export type CalEvent={id:string;title:string;date:string;time:string;endTime?:string;endDate?:string;recurrence?:string;organizerName?:string;organizerUrl?:string;organizerEmail?:string;organizerPhone?:string;venue:string;address?:string;category:string;price:string;description:string;source?:string;sample?:boolean;status?:string;score?:number;evidence?:string;organizerType?:string};
+export type CalEvent={id:string;title:string;date:string;time:string;endTime?:string;endDate?:string;recurrence?:string;organizerName?:string;organizerUrl?:string;organizerEmail?:string;organizerPhone?:string;venue:string;address?:string;category:string;price:string;description:string;sourceSummary?:string;source?:string;sample?:boolean;status?:string;score?:number;evidence?:string;organizerType?:string};
 const examples=[
  ['Open mic, open minds','music','18:30','The neighborhood coffeehouse','Free','A little music, a little poetry, and a room full of new faces. Bring something to share or just come listen.'],
  ['Clay & conversation','arts','17:00','Community pottery studio','$25','An easygoing introduction to hand-building. No experience needed; materials and good company included.'],

@@ -6,7 +6,7 @@ class SchemaTests(unittest.TestCase):
   self.db=sqlite3.connect(':memory:');self.db.executescript((ROOT/'migrations/0001_production.sql').read_text());self.db.execute("INSERT INTO users VALUES('u','test@example.org','admin','hash','salt',1,'2026-10-05T00:00:00Z')")
   for n in ['e1','e2']:
    self.db.execute("INSERT INTO events(id,title,date,venue,address,category,created_at,updated_at) VALUES(?,?,?,'Gallery','123 Test St','arts','2026-10-05T00:00:00Z','2026-10-05T00:00:00Z')",(n,n,'2026-10-09'))
-  self.db.executescript((ROOT/'migrations/0002_review_ledger.sql').read_text())
+  self.db.executescript((ROOT/'migrations/0002_review_ledger.sql').read_text());self.db.executescript((ROOT/'migrations/0003_public_summary.sql').read_text())
  def test_migration_preserves_candidates_and_normalizes_shared_venue(self):
   self.assertEqual(self.db.execute('SELECT COUNT(*) FROM events').fetchone()[0],2);self.assertEqual(self.db.execute('SELECT COUNT(*) FROM venues').fetchone()[0],1);self.assertEqual(self.db.execute('SELECT COUNT(*) FROM event_occurrences').fetchone()[0],2);self.assertEqual(self.db.execute('PRAGMA foreign_key_check').fetchall(),[])
  def test_unknowns_are_null_in_occurrences(self):self.assertEqual(self.db.execute('SELECT start_time,end_time FROM event_occurrences LIMIT 1').fetchone(),(None,None))
