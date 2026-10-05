@@ -1,10 +1,10 @@
 export const categories = [
- {id:'music',name:'Music & nightlife',color:'#9851cf',bg:'#f0e7f9'},
- {id:'arts',name:'Arts & making',color:'#dd7d2a',bg:'#fff0df'},
- {id:'community',name:'Community',color:'#3978d3',bg:'#e6efff'},
- {id:'outdoors',name:'Outdoors & movement',color:'#318963',bg:'#e1f1e8'},
- {id:'food',name:'Food & drink',color:'#ce4d73',bg:'#fbe5ed'},
- {id:'learning',name:'Classes & learning',color:'#368a99',bg:'#e3f3f5'},
+ {id:'music',name:'Music & nightlife',color:'#285db4',bg:'#e1edffde'},
+ {id:'arts',name:'Arts & making',color:'#a94912',bg:'#ffecd9e8'},
+ {id:'community',name:'Community',color:'#12618b',bg:'#dff4ffe3'},
+ {id:'outdoors',name:'Outdoors & movement',color:'#396b87',bg:'#e6f0f8e8'},
+ {id:'food',name:'Food & drink',color:'#a24530',bg:'#ffe5dce5'},
+ {id:'learning',name:'Classes & learning',color:'#795506',bg:'#fff3bfe5'},
 ];
 export type CalEvent={id:string;title:string;date:string;time:string;endTime?:string;endDate?:string;recurrence?:string;organizerName?:string;organizerUrl?:string;organizerEmail?:string;organizerPhone?:string;venue:string;address?:string;category:string;price:string;description:string;sourceSummary?:string;source?:string;sample?:boolean;status?:string;score?:number;evidence?:string;organizerType?:string};
 const examples=[
