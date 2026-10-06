@@ -7,10 +7,12 @@ export function isOvernightOccurrence(e){
 }
 export function reviewIssues(e){
  const issues=[];const add=(field,code,message)=>issues.push({field,code,message});
- for(const field of ['title','date','time','venue','address','description','source','organizerName'])if(!e[field]?.trim()||e[field]==='UNABLE TO DETERMINE')add(field,'missing','UNABLE TO DETERMINE');
+ for(const field of ['title','date',...(e.allDay?[]:['time']),'venue','address','description','source','organizerName'])if(!e[field]?.trim()||e[field]==='UNABLE TO DETERMINE')add(field,'missing','UNABLE TO DETERMINE');
  if(!e.organizerUrl&&!e.organizerEmail&&!e.organizerPhone)add('organizerUrl','missing','UNABLE TO DETERMINE');
  if(!e.recurrence||e.recurrence==='unknown')add('recurrence','missing','UNABLE TO DETERMINE');
- if(e.endDate&&e.endDate!==e.date&&!(e.recurrence==='single'&&isOvernightOccurrence(e)))add('endDate','series','Date range: split into individual scheduled occurrences before approval');
+ if(e.endDate&&e.endDate<e.date)add('endDate','order','End date must be on or after start date');
+ if(e.recurrence==='range'&&!e.endDate)add('endDate','missing','Multi-day event needs an end date');
+ if(e.allDay&&(e.time||e.endTime))add('time','conflict','All-day events must not have clock times');
  if(e.time&&e.endTime&&(!e.endDate||e.endDate===e.date)&&e.endTime<=e.time)add('endTime','order','End must follow start; confirm the end date for overnight events');
  if(e.recurrence==='rule'&&!e.rrule)add('recurrence','missing','Recurring event needs an RRULE');
  for(const field of e.uncertainFields||[])if(field!=='endTime'||e.endTime)add(field,'uncertain','Source is ambiguous or inferred: confirm before approval');
@@ -18,6 +20,6 @@ export function reviewIssues(e){
  return issues;
 }
 export function evidenceQuality(e,claims=[]){
- const fields=['title','date','time','endTime','venue','address','recurrence','organizerName'];
- return Math.round(100*fields.filter(f=>e[f]&&claims.some(c=>c.field===f&&c.method!=='inferred')).length/fields.length);
+ const fields=['title','date',e.allDay?'allDay':'time','endTime','venue','address','recurrence','organizerName'];
+ return Math.round(100*fields.filter(f=>e[f]&&!e.uncertainFields?.includes(f)&&claims.some(c=>c.field===f&&c.method!=='inferred')).length/fields.length);
 }

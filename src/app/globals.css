@@ -85,3 +85,5 @@ button:focus-visible,a:focus-visible,.month-control>button:focus-visible,.locati
  .agenda-category-icon{width:16px;height:16px}
 }
 @media(forced-colors:active){.event-chip{border:1px solid CanvasText}.category-icon{color:CanvasText!important}}
+
+.schedule-kind>span{display:flex;align-items:center;gap:8px}.manage-fields .schedule-kind input[type=checkbox]{width:18px;height:18px;flex:0 0 18px;padding:0;accent-color:#2465a8}.schedule-kind small{font-weight:400;line-height:1.5;color:#58687a}

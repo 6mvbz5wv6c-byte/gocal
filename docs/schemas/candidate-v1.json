@@ -1,34 +1,258 @@
 {
-  "$schema":"https://json-schema.org/draft/2020-12/schema",
-  "$id":"https://findout.events/schemas/candidate-v1.json",
-  "title":"FindOut candidate v1",
-  "description":"Pending event input. Unknown scalar facts are empty strings. Readiness is enforced separately by the shared quality gate; this schema intentionally permits incomplete candidates.",
-  "type":"object",
-  "required":["title","category"],
-  "properties":{
-    "title":{"type":"string","minLength":1,"maxLength":180},
-    "date":{"$ref":"#/$defs/date"},"endDate":{"$ref":"#/$defs/date"},
-    "time":{"$ref":"#/$defs/time"},"endTime":{"$ref":"#/$defs/time"},
-    "timezone":{"const":"America/Chicago"},
-    "venue":{"type":"string","maxLength":200},"address":{"type":"string","maxLength":300},
-    "category":{"enum":["music","arts","community","outdoors","food","learning"]},
-    "price":{"type":"string","maxLength":100},"description":{"type":"string","maxLength":3000},
-    "sourceSummary":{"type":"string","maxLength":1400},
-    "source":{"$ref":"#/$defs/url"},"evidence":{"type":"string","maxLength":5000},
-    "organizerType":{"enum":["community","business","crawl"]},
-    "organizerName":{"type":"string","maxLength":200},"organizerUrl":{"$ref":"#/$defs/url"},
-    "organizerEmail":{"type":"string","maxLength":254},"organizerPhone":{"type":"string","maxLength":60},
-    "recurrence":{"enum":["single","rule","range","unknown"]},"rrule":{"type":"string","maxLength":300},
-    "uncertainFields":{"type":"array","maxItems":15,"uniqueItems":true,"items":{"enum":["title","date","time","endTime","endDate","venue","address","recurrence","organizerName","organizerUrl","description","source"]}},
-    "research":{"type":"object","required":["snapshots","claims","steps"],"properties":{
-      "snapshots":{"type":"array","maxItems":5,"items":{"type":"object","required":["url","text","fetchedAt","status"],"properties":{"url":{"$ref":"#/$defs/url"},"text":{"type":"string","maxLength":22000},"fetchedAt":{"type":"string","format":"date-time"},"status":{"enum":["ok","blocked","error"]}}}},
-      "claims":{"type":"array","maxItems":30,"items":{"type":"object","required":["field","url","quote","method"],"properties":{"field":{"type":"string"},"url":{"$ref":"#/$defs/url"},"quote":{"type":"string","minLength":1,"maxLength":1200},"method":{"enum":["structured","text","manual","inferred"]}}}},
-      "steps":{"type":"array","maxItems":20,"items":{"type":"object","required":["stage","rule","outcome","detail"],"properties":{"stage":{"type":"string","maxLength":60},"rule":{"type":"string","maxLength":100},"outcome":{"type":"string","maxLength":60},"detail":{"type":"string","maxLength":1500}}}}
-    }}
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://findout.events/schemas/candidate-v1.json",
+  "title": "FindOut candidate v1",
+  "description": "Pending event input. Unknown scalar facts are empty strings. Readiness is enforced separately by the shared quality gate; this schema intentionally permits incomplete candidates.",
+  "type": "object",
+  "required": [
+    "title",
+    "category"
+  ],
+  "properties": {
+    "title": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 180
+    },
+    "date": {
+      "$ref": "#/$defs/date"
+    },
+    "endDate": {
+      "$ref": "#/$defs/date"
+    },
+    "time": {
+      "$ref": "#/$defs/time"
+    },
+    "endTime": {
+      "$ref": "#/$defs/time"
+    },
+    "timezone": {
+      "const": "America/Chicago"
+    },
+    "venue": {
+      "type": "string",
+      "maxLength": 200
+    },
+    "address": {
+      "type": "string",
+      "maxLength": 300
+    },
+    "category": {
+      "enum": [
+        "music",
+        "arts",
+        "community",
+        "outdoors",
+        "food",
+        "learning"
+      ]
+    },
+    "price": {
+      "type": "string",
+      "maxLength": 100
+    },
+    "description": {
+      "type": "string",
+      "maxLength": 3000
+    },
+    "sourceSummary": {
+      "type": "string",
+      "maxLength": 1400
+    },
+    "source": {
+      "$ref": "#/$defs/url"
+    },
+    "evidence": {
+      "type": "string",
+      "maxLength": 5000
+    },
+    "organizerType": {
+      "enum": [
+        "community",
+        "business",
+        "crawl"
+      ]
+    },
+    "organizerName": {
+      "type": "string",
+      "maxLength": 200
+    },
+    "organizerUrl": {
+      "$ref": "#/$defs/url"
+    },
+    "organizerEmail": {
+      "type": "string",
+      "maxLength": 254
+    },
+    "organizerPhone": {
+      "type": "string",
+      "maxLength": 60
+    },
+    "recurrence": {
+      "enum": [
+        "single",
+        "rule",
+        "range",
+        "unknown"
+      ]
+    },
+    "rrule": {
+      "type": "string",
+      "maxLength": 300
+    },
+    "uncertainFields": {
+      "type": "array",
+      "maxItems": 15,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "title",
+          "date",
+          "time",
+          "endTime",
+          "endDate",
+          "venue",
+          "address",
+          "recurrence",
+          "organizerName",
+          "organizerUrl",
+          "description",
+          "source",
+          "allDay",
+          "scheduleNote"
+        ]
+      }
+    },
+    "research": {
+      "type": "object",
+      "required": [
+        "snapshots",
+        "claims",
+        "steps"
+      ],
+      "properties": {
+        "snapshots": {
+          "type": "array",
+          "maxItems": 5,
+          "items": {
+            "type": "object",
+            "required": [
+              "url",
+              "text",
+              "fetchedAt",
+              "status"
+            ],
+            "properties": {
+              "url": {
+                "$ref": "#/$defs/url"
+              },
+              "text": {
+                "type": "string",
+                "maxLength": 22000
+              },
+              "fetchedAt": {
+                "type": "string",
+                "format": "date-time"
+              },
+              "status": {
+                "enum": [
+                  "ok",
+                  "blocked",
+                  "error"
+                ]
+              }
+            }
+          }
+        },
+        "claims": {
+          "type": "array",
+          "maxItems": 30,
+          "items": {
+            "type": "object",
+            "required": [
+              "field",
+              "url",
+              "quote",
+              "method"
+            ],
+            "properties": {
+              "field": {
+                "type": "string"
+              },
+              "url": {
+                "$ref": "#/$defs/url"
+              },
+              "quote": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1200
+              },
+              "method": {
+                "enum": [
+                  "structured",
+                  "text",
+                  "manual",
+                  "inferred"
+                ]
+              }
+            }
+          }
+        },
+        "steps": {
+          "type": "array",
+          "maxItems": 20,
+          "items": {
+            "type": "object",
+            "required": [
+              "stage",
+              "rule",
+              "outcome",
+              "detail"
+            ],
+            "properties": {
+              "stage": {
+                "type": "string",
+                "maxLength": 60
+              },
+              "rule": {
+                "type": "string",
+                "maxLength": 100
+              },
+              "outcome": {
+                "type": "string",
+                "maxLength": 60
+              },
+              "detail": {
+                "type": "string",
+                "maxLength": 1500
+              }
+            }
+          }
+        }
+      }
+    },
+    "allDay": {
+      "type": "boolean",
+      "description": "Explicit source-confirmed all-day event; never inferred from missing times."
+    },
+    "scheduleNote": {
+      "type": "string",
+      "maxLength": 1000
+    }
   },
-  "$defs":{
-    "date":{"type":"string","pattern":"^(|[0-9]{4}-[0-9]{2}-[0-9]{2})$"},
-    "time":{"type":"string","pattern":"^(|([01][0-9]|2[0-3]):[0-5][0-9])$"},
-    "url":{"type":"string","maxLength":2000,"pattern":"^(|https://[^\\s]+)$"}
+  "$defs": {
+    "date": {
+      "type": "string",
+      "pattern": "^(|[0-9]{4}-[0-9]{2}-[0-9]{2})$"
+    },
+    "time": {
+      "type": "string",
+      "pattern": "^(|([01][0-9]|2[0-3]):[0-5][0-9])$"
+    },
+    "url": {
+      "type": "string",
+      "maxLength": 2000,
+      "pattern": "^(|https://[^\\s]+)$"
+    }
   }
 }

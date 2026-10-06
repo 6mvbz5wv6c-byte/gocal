@@ -64,3 +64,7 @@ pending enrichment requires a fresh revision and the API's `enrich` action.
 Different start times or multiple matching rows require manual reconciliation.
 A later performance on a different date remains a separate occurrence. Read the
 current database again before applying a plan and preserve concurrent edits.
+
+## Multi-day events
+
+A festival or exhibition can use one candidate with `date`, inclusive `endDate`, optional final `endTime`, and `scheduleNote` for daily hours/closures. Do not split one festival into daily duplicates. Independent performances on separate dates remain separate events. A missing clock time is unknown; set `allDay: true` only when explicitly supported by source evidence and leave both clock fields empty. Range events require an end date. Conflicting/uncertain fields reduce evidence coverage and still block approval.

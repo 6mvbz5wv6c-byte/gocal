@@ -8,7 +8,7 @@ export function extendedInput(b){
  const rrule=clean(b.rrule,300);if(rrule&&!/^FREQ=(DAILY|WEEKLY|MONTHLY|YEARLY)(;(INTERVAL|COUNT|UNTIL|BYDAY|BYMONTHDAY|BYMONTH|BYSETPOS|WKST)=[A-Z0-9,+-]+)*$/.test(rrule))throw Error('Invalid RFC 5545 recurrence rule');
  const email=clean(b.organizerEmail,254);if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))throw Error('Invalid organizer email');
  if(b.timezone&&b.timezone!=='America/Chicago')throw Error('Fayetteville events use America/Chicago');
- if(b.uncertainFields&&(!Array.isArray(b.uncertainFields)||b.uncertainFields.length>15||b.uncertainFields.some(f=>!['title','date','time','endTime','endDate','venue','address','recurrence','organizerName','organizerUrl','description','source'].includes(f))))throw Error('Invalid uncertainty fields');
+ if(b.uncertainFields&&(!Array.isArray(b.uncertainFields)||b.uncertainFields.length>15||b.uncertainFields.some(f=>!['title','date','time','endTime','endDate','allDay','scheduleNote','venue','address','recurrence','organizerName','organizerUrl','description','source'].includes(f))))throw Error('Invalid uncertainty fields');
  return {uncertainFields:b.uncertainFields||[],timezone:'America/Chicago',recurrence,rrule,organizerName:clean(b.organizerName),organizerUrl:https(clean(b.organizerUrl,2000)),organizerEmail:email,organizerPhone:clean(b.organizerPhone,60)};
 }
 // SQL statements are conditional on the committed revision. A concurrent decision cannot
@@ -38,7 +38,7 @@ export function validateResearch(r){
  if(!r||!Array.isArray(r.snapshots)||r.snapshots.length>5||!Array.isArray(r.claims)||r.claims.length>30||!Array.isArray(r.steps)||r.steps.length>20)throw Error('Invalid evidence bundle');
  let total=0;
  for(const s of r.snapshots){s.url=https(s.url);if(!s.url||typeof s.text!=='string'||(total+=s.text.length)>22000||!['ok','blocked','error'].includes(s.status)||!/^\d{4}-\d\d-\d\dT/.test(s.fetchedAt)||!Number.isFinite(Date.parse(s.fetchedAt)))throw Error('Invalid source snapshot');}
- for(const c of r.claims){if(!['title','date','time','endTime','endDate','venue','address','recurrence','organizerName','organizerUrl','organizerEmail','organizerPhone','description','price'].includes(c.field)||typeof c.quote!=='string'||!c.quote.trim()||c.quote.length>1200||!['structured','text','manual','inferred'].includes(c.method))throw Error('Invalid field evidence');const s=r.snapshots.find(s=>s.url===c.url&&s.status==='ok');if(!s||!s.text.includes(c.quote))throw Error('Evidence quote not found in captured source');}
+ for(const c of r.claims){if(!['title','date','time','endTime','endDate','allDay','scheduleNote','venue','address','recurrence','organizerName','organizerUrl','organizerEmail','organizerPhone','description','price'].includes(c.field)||typeof c.quote!=='string'||!c.quote.trim()||c.quote.length>1200||!['structured','text','manual','inferred'].includes(c.method))throw Error('Invalid field evidence');const s=r.snapshots.find(s=>s.url===c.url&&s.status==='ok');if(!s||!s.text.includes(c.quote))throw Error('Evidence quote not found in captured source');}
  for(const s of r.steps)for(const [k,n]of [['stage',60],['rule',100],['outcome',60],['detail',1500]])if(typeof s[k]!=='string'||s[k].length>n)throw Error('Invalid crawl decision step');
  return r;
 }

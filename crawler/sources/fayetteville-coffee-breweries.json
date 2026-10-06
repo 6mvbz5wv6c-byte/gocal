@@ -1,0 +1,365 @@
+[
+  {
+    "name": "Onyx Coffee Lab",
+    "rating": 4.6,
+    "reviews": 1339,
+    "address": "2418 N Gregg Ave, Fayetteville, AR 72703, USA",
+    "category": "coffee-shops",
+    "website": "https://onyxcoffeelab.com/pages/fayetteville",
+    "rankingSource": "https://www.nwapublic.com/best/coffee-shops/fayetteville/",
+    "rankVerifiedByPublisher": "2026-10-01",
+    "socialSources": [
+      "https://www.facebook.com/OnyxCoffeeLab",
+      "https://www.instagram.com/onyxcoffeelab"
+    ],
+    "rank": 1,
+    "checkedAt": "2026-10-06T23:47:34.692823+00:00",
+    "reviewCountProvenance": "Google review counts reported by NWA Public; not independently verified against Google. Ranked available shortlist; not exhaustive city census.",
+    "socialCoverage": "Latest posts unavailable through public fetch; indexed-event fallback checked.",
+    "websiteCoverage": "Current classes located in Rogers; excluded from this Fayetteville venue crawl."
+  },
+  {
+    "name": "Puritan Coffee & Beer",
+    "rating": 4.5,
+    "reviews": 682,
+    "address": "205 W Dickson St, Fayetteville, AR 72701, USA",
+    "category": "coffee-shops",
+    "website": "https://puritancoffeebeer.com/",
+    "rankingSource": "https://www.nwapublic.com/best/coffee-shops/fayetteville/",
+    "rankVerifiedByPublisher": "2026-10-01",
+    "socialSources": [
+      "https://www.instagram.com/puritancoffeebeer/",
+      "https://facebook.com/puritancoffeebeer"
+    ],
+    "rank": 2,
+    "checkedAt": "2026-10-06T23:47:36.070751+00:00",
+    "reviewCountProvenance": "Google review counts reported by NWA Public; not independently verified against Google. Ranked available shortlist; not exhaustive city census.",
+    "socialCoverage": "Latest posts unavailable through public fetch; indexed-event fallback checked.",
+    "websiteCoverage": "No current dated Fayetteville event verified on this page."
+  },
+  {
+    "name": "Basecamp Coffee Company",
+    "rating": 4.5,
+    "reviews": 623,
+    "address": "2850 N College Ave, Fayetteville, AR 72703, USA",
+    "category": "coffee-shops",
+    "website": "https://www.basecampfayetteville.com/",
+    "rankingSource": "https://www.nwapublic.com/best/coffee-shops/fayetteville/",
+    "rankVerifiedByPublisher": "2026-10-01",
+    "socialSources": [
+      "https://www.facebook.com/basecampcoffeeco",
+      "https://instagram.com/basecamp_coffeeco"
+    ],
+    "rank": 3,
+    "checkedAt": "2026-10-06T23:47:37.453358+00:00",
+    "reviewCountProvenance": "Google review counts reported by NWA Public; not independently verified against Google. Ranked available shortlist; not exhaustive city census.",
+    "socialCoverage": "Latest posts unavailable through public fetch; indexed-event fallback checked.",
+    "websiteCoverage": "No current dated Fayetteville event verified on this page."
+  },
+  {
+    "name": "Doomsday Coffee & Roasterie",
+    "rating": 4.7,
+    "reviews": 587,
+    "address": "436 W Watson St, Fayetteville, AR 72701, USA",
+    "category": "coffee-shops",
+    "website": "https://www.doomsdaycoffeeroast.com/",
+    "rankingSource": "https://www.nwapublic.com/best/coffee-shops/fayetteville/",
+    "rankVerifiedByPublisher": "2026-10-01",
+    "socialSources": [
+      "https://www.instagram.com/doomsdaycoffee/"
+    ],
+    "rank": 4,
+    "checkedAt": "2026-10-06T23:47:38.820733+00:00",
+    "reviewCountProvenance": "Google review counts reported by NWA Public; not independently verified against Google. Ranked available shortlist; not exhaustive city census.",
+    "socialCoverage": "Latest posts unavailable through public fetch; indexed-event fallback checked.",
+    "websiteCoverage": "No current dated Fayetteville event verified on this page."
+  },
+  {
+    "name": "Flyway Brewing Company - Fayetteville",
+    "rating": 4.5,
+    "reviews": 401,
+    "address": "1550 E Zion Rd #1, Fayetteville, AR 72703, USA",
+    "category": "breweries",
+    "website": "https://www.flywaybrewing.com/",
+    "rankingSource": "https://www.nwapublic.com/best/breweries/fayetteville/",
+    "rankVerifiedByPublisher": "2026-10-01",
+    "socialSources": [
+      "https://www.instagram.com/flywayfayetteville/",
+      "https://www.facebook.com/flywayfayetteville"
+    ],
+    "rank": 5,
+    "checkedAt": "2026-10-06T23:47:40.175107+00:00",
+    "reviewCountProvenance": "Google review counts reported by NWA Public; not independently verified against Google. Ranked available shortlist; not exhaustive city census.",
+    "socialCoverage": "Latest posts unavailable through public fetch; indexed-event fallback checked.",
+    "websiteCoverage": "Specific dated candidates found; see review report for original-source verification gaps."
+  },
+  {
+    "name": "Fossil Cove Brewing Co.",
+    "rating": 4.8,
+    "reviews": 386,
+    "address": "3959 N Steele Blvd #152, Fayetteville, AR 72703, USA",
+    "category": "breweries",
+    "website": "https://www.fossilcovebrewing.com/",
+    "rankingSource": "https://www.nwapublic.com/best/breweries/fayetteville/",
+    "rankVerifiedByPublisher": "2026-10-01",
+    "socialSources": [
+      "https://www.instagram.com/fossilcovebrewing/",
+      "https://www.facebook.com/fossilcovebrewing/"
+    ],
+    "rank": 6,
+    "checkedAt": "2026-10-06T23:47:41.838442+00:00",
+    "reviewCountProvenance": "Google review counts reported by NWA Public; not independently verified against Google. Ranked available shortlist; not exhaustive city census.",
+    "socialCoverage": "Latest posts unavailable through public fetch; indexed-event fallback checked.",
+    "websiteCoverage": "No current dated Fayetteville event verified on this page."
+  },
+  {
+    "name": "Six Twelve Coffeehouse & Bar",
+    "rating": 4.6,
+    "reviews": 340,
+    "address": "3980 W Wedington Dr #19, Fayetteville, AR 72704, USA",
+    "category": "coffee-shops",
+    "website": "https://63961dea004d1.cardpage.net/",
+    "rankingSource": "https://www.nwapublic.com/best/coffee-shops/fayetteville/",
+    "rankVerifiedByPublisher": "2026-10-01",
+    "socialSources": [
+      "https://www.facebook.com/Six-Twelve-Coffeehouse-Bar-1800266523377590/"
+    ],
+    "rank": 7,
+    "checkedAt": "2026-10-06T23:47:43.215336+00:00",
+    "reviewCountProvenance": "Google review counts reported by NWA Public; not independently verified against Google. Ranked available shortlist; not exhaustive city census.",
+    "socialCoverage": "Latest posts unavailable through public fetch; indexed-event fallback checked.",
+    "websiteCoverage": "Specific dated candidates found; see review report for original-source verification gaps."
+  },
+  {
+    "name": "Confident Coffee Roasters",
+    "rating": 4.7,
+    "reviews": 279,
+    "address": "2015 Main Dr Ste C, Fayetteville, AR 72704, USA",
+    "category": "coffee-shops",
+    "website": "https://www.confidentcoffeeroasters.com/",
+    "rankingSource": "https://www.nwapublic.com/best/coffee-shops/fayetteville/",
+    "rankVerifiedByPublisher": "2026-10-01",
+    "socialSources": [
+      "https://www.facebook.com/ConfidentCoffee",
+      "https://www.instagram.com/confidentcoffee/"
+    ],
+    "rank": 8,
+    "checkedAt": "2026-10-06T23:47:44.574417+00:00",
+    "reviewCountProvenance": "Google review counts reported by NWA Public; not independently verified against Google. Ranked available shortlist; not exhaustive city census.",
+    "socialCoverage": "Latest posts unavailable through public fetch; indexed-event fallback checked.",
+    "websiteCoverage": "No current dated Fayetteville event verified on this page."
+  },
+  {
+    "name": "Crisis Brewing",
+    "rating": 4.9,
+    "reviews": 262,
+    "address": "3959 N Steele Blvd #152, Fayetteville, AR 72703, USA",
+    "category": "breweries",
+    "website": "https://www.crisisbrew.com/",
+    "rankingSource": "https://www.nwapublic.com/best/breweries/fayetteville/",
+    "rankVerifiedByPublisher": "2026-10-01",
+    "socialSources": [],
+    "rank": 9,
+    "checkedAt": "2026-10-06T23:47:45.936329+00:00",
+    "reviewCountProvenance": "Google review counts reported by NWA Public; not independently verified against Google. Ranked available shortlist; not exhaustive city census.",
+    "socialCoverage": "No verified readable social feed located.",
+    "websiteCoverage": "Specific dated candidates found; see review report for original-source verification gaps."
+  },
+  {
+    "name": "Old Pine Coffee Roasters",
+    "rating": 4.8,
+    "reviews": 242,
+    "address": "3775 Mall Ave #1, Fayetteville, AR 72703, USA",
+    "category": "coffee-shops",
+    "website": "https://www.oldpinecoffeeroasters.com/",
+    "rankingSource": "https://www.nwapublic.com/best/coffee-shops/fayetteville/",
+    "rankVerifiedByPublisher": "2026-10-01",
+    "socialSources": [
+      "https://www.facebook.com/oldpinecoffeeroasters",
+      "https://www.instagram.com/oldpinecoffeeroasters"
+    ],
+    "rank": 10,
+    "checkedAt": "2026-10-06T23:47:47.360943+00:00",
+    "reviewCountProvenance": "Google review counts reported by NWA Public; not independently verified against Google. Ranked available shortlist; not exhaustive city census.",
+    "socialCoverage": "Latest posts unavailable through public fetch; indexed-event fallback checked.",
+    "websiteCoverage": "No current dated Fayetteville event verified on this page."
+  },
+  {
+    "name": "Word Coffee",
+    "rating": 4.9,
+    "reviews": 237,
+    "address": "816 N College Ave, Fayetteville, AR 72701, USA",
+    "category": "coffee-shops",
+    "website": "https://www.wordnwa.com/",
+    "rankingSource": "https://www.nwapublic.com/best/coffee-shops/fayetteville/",
+    "rankVerifiedByPublisher": "2026-10-01",
+    "socialSources": [
+      "https://www.instagram.com/wordcoffee.nwa/",
+      "https://www.facebook.com/wordcoffee.nwa"
+    ],
+    "rank": 11,
+    "checkedAt": "2026-10-06T23:47:48.740475+00:00",
+    "reviewCountProvenance": "Google review counts reported by NWA Public; not independently verified against Google. Ranked available shortlist; not exhaustive city census.",
+    "socialCoverage": "Latest posts unavailable through public fetch; indexed-event fallback checked.",
+    "websiteCoverage": "No current dated Fayetteville event verified on this page."
+  },
+  {
+    "name": "Summer Moon Coffee",
+    "rating": 4.8,
+    "reviews": 216,
+    "address": "1422 N College Ave, Fayetteville, AR 72703, USA",
+    "category": "coffee-shops",
+    "website": "https://locations.summermooncoffee.com/locations/n-college-ave-fayetteville/",
+    "rankingSource": "https://www.nwapublic.com/best/coffee-shops/fayetteville/",
+    "rankVerifiedByPublisher": "2026-10-01",
+    "socialSources": [
+      "https://www.instagram.com/summermoonfayetteville/",
+      "https://www.facebook.com/summermoonfayetteville"
+    ],
+    "rank": 12,
+    "checkedAt": "2026-10-06T23:47:50.132947+00:00",
+    "reviewCountProvenance": "Google review counts reported by NWA Public; not independently verified against Google. Ranked available shortlist; not exhaustive city census.",
+    "socialCoverage": "Latest posts unavailable through public fetch; indexed-event fallback checked.",
+    "websiteCoverage": "No current dated Fayetteville event verified on this page."
+  },
+  {
+    "name": "Baba Boudan's Espresso",
+    "rating": 4.8,
+    "reviews": 216,
+    "address": "701 N College Ave, Fayetteville, AR 72701, USA",
+    "category": "coffee-shops",
+    "website": "https://www.nwapublic.com/best/coffee-shops/fayetteville/#rank-10",
+    "rankingSource": "https://www.nwapublic.com/best/coffee-shops/fayetteville/",
+    "rankVerifiedByPublisher": "2026-10-01",
+    "socialSources": [],
+    "rank": 13,
+    "checkedAt": "2026-10-06T23:47:52.067773+00:00",
+    "reviewCountProvenance": "Google review counts reported by NWA Public; not independently verified against Google. Ranked available shortlist; not exhaustive city census.",
+    "socialCoverage": "No verified readable social feed located.",
+    "websiteCoverage": "No current dated Fayetteville event verified on this page."
+  },
+  {
+    "name": "Columbus House Brewery and Tap Room",
+    "rating": 4.5,
+    "reviews": 194,
+    "address": "3959 N Steele Blvd #152, Fayetteville, AR 72703, USA",
+    "category": "breweries",
+    "website": "https://www.columbushousebrewery.com/",
+    "rankingSource": "https://www.nwapublic.com/best/breweries/fayetteville/",
+    "rankVerifiedByPublisher": "2026-10-01",
+    "socialSources": [],
+    "rank": 14,
+    "checkedAt": "2026-10-06T23:47:53.412453+00:00",
+    "reviewCountProvenance": "Google review counts reported by NWA Public; not independently verified against Google. Ranked available shortlist; not exhaustive city census.",
+    "socialCoverage": "No verified readable social feed located.",
+    "websiteCoverage": "Weekly Sunday ride mentioned without dated start time. Poker Ride source confirms Oct 24 stop; captured as one ride, not a duplicate stop event."
+  },
+  {
+    "name": "West Mountain Brewing Co",
+    "rating": 4.5,
+    "reviews": 152,
+    "address": "3959 N Steele Blvd #152, Fayetteville, AR 72703, USA",
+    "category": "breweries",
+    "website": "https://www.instagram.com/tinytimswmbofficial/",
+    "rankingSource": "https://www.nwapublic.com/best/breweries/fayetteville/",
+    "rankVerifiedByPublisher": "2026-10-01",
+    "socialSources": [],
+    "rank": 15,
+    "checkedAt": "2026-10-06T23:47:54.810789+00:00",
+    "reviewCountProvenance": "Google review counts reported by NWA Public; not independently verified against Google. Ranked available shortlist; not exhaustive city census.",
+    "socialCoverage": "Latest posts unavailable through public fetch; indexed-event fallback checked.",
+    "websiteCoverage": "No current dated Fayetteville event verified on this page."
+  },
+  {
+    "name": "Fayetteville Beer Works",
+    "rating": 4.8,
+    "reviews": 126,
+    "address": "3959 N Steele Blvd #152, Fayetteville, AR 72703, USA",
+    "category": "breweries",
+    "website": "https://www.fayettevillebeerworks.com/",
+    "rankingSource": "https://www.nwapublic.com/best/breweries/fayetteville/",
+    "rankVerifiedByPublisher": "2026-10-01",
+    "socialSources": [
+      "https://www.facebook.com/FayettevilleBeerWorks",
+      "https://www.instagram.com/fayettevillebeerworks/"
+    ],
+    "rank": 16,
+    "checkedAt": "2026-10-06T23:47:56.199868+00:00",
+    "reviewCountProvenance": "Google review counts reported by NWA Public; not independently verified against Google. Ranked available shortlist; not exhaustive city census.",
+    "socialCoverage": "Latest posts unavailable through public fetch; indexed-event fallback checked.",
+    "websiteCoverage": "Specific dated candidates found; see review report for original-source verification gaps."
+  },
+  {
+    "name": "Mad Rooster Beer Company",
+    "rating": 4.7,
+    "reviews": 112,
+    "address": "3959 N Steele Blvd #152, Fayetteville, AR 72703, USA",
+    "category": "breweries",
+    "website": "https://www.madroosterbeer.com/",
+    "rankingSource": "https://www.nwapublic.com/best/breweries/fayetteville/",
+    "rankVerifiedByPublisher": "2026-10-01",
+    "socialSources": [
+      "https://www.facebook.com/madroosterbeerco",
+      "https://www.instagram.com/madroosterbeerco/"
+    ],
+    "rank": 17,
+    "checkedAt": "2026-10-06T23:47:57.606454+00:00",
+    "reviewCountProvenance": "Google review counts reported by NWA Public; not independently verified against Google. Ranked available shortlist; not exhaustive city census.",
+    "socialCoverage": "Latest posts unavailable through public fetch; indexed-event fallback checked.",
+    "websiteCoverage": "No current dated Fayetteville event verified on this page."
+  },
+  {
+    "name": "Dodo Coffee Co.",
+    "rating": 4.4,
+    "reviews": 107,
+    "address": "2568 W McMillan Dr, Fayetteville, AR 72701, USA",
+    "category": "coffee-shops",
+    "website": "https://dodocoffee.co/",
+    "rankingSource": "https://www.nwapublic.com/best/coffee-shops/fayetteville/",
+    "rankVerifiedByPublisher": "2026-10-01",
+    "socialSources": [
+      "https://www.instagram.com/dodocoffeeco"
+    ],
+    "rank": 18,
+    "checkedAt": "2026-10-06T23:47:58.980910+00:00",
+    "reviewCountProvenance": "Google review counts reported by NWA Public; not independently verified against Google. Ranked available shortlist; not exhaustive city census.",
+    "socialCoverage": "Latest posts unavailable through public fetch; indexed-event fallback checked.",
+    "websiteCoverage": "No current dated Fayetteville event verified on this page."
+  },
+  {
+    "name": "Sicar\u00fa Coffee",
+    "rating": 4.9,
+    "reviews": 104,
+    "address": "716 W Sycamore St, Fayetteville, AR 72703, USA",
+    "category": "coffee-shops",
+    "website": "https://www.sicarucoffeeroasters.com/",
+    "rankingSource": "https://www.nwapublic.com/best/coffee-shops/fayetteville/",
+    "rankVerifiedByPublisher": "2026-10-01",
+    "socialSources": [
+      "https://www.instagram.com/sicarucoffee/"
+    ],
+    "rank": 19,
+    "checkedAt": "2026-10-06T23:48:00.356586+00:00",
+    "reviewCountProvenance": "Google review counts reported by NWA Public; not independently verified against Google. Ranked available shortlist; not exhaustive city census.",
+    "socialCoverage": "Latest posts unavailable through public fetch; indexed-event fallback checked.",
+    "websiteCoverage": "Event page exposes March/April 2026; excluded as expired. Existing Oct/Nov/Dec industry events preserved."
+  },
+  {
+    "name": "The Meteor Cafe",
+    "rating": 4.3,
+    "reviews": 103,
+    "address": "417 M.L.K. Jr Blvd #130, Fayetteville, AR 72701, USA",
+    "category": "coffee-shops",
+    "website": "https://www.themeteor.cafe/",
+    "rankingSource": "https://www.nwapublic.com/best/coffee-shops/fayetteville/",
+    "rankVerifiedByPublisher": "2026-10-01",
+    "socialSources": [
+      "https://www.instagram.com/themeteorcafe/"
+    ],
+    "rank": 20,
+    "checkedAt": "2026-10-06T23:48:01.734392+00:00",
+    "reviewCountProvenance": "Google review counts reported by NWA Public; not independently verified against Google. Ranked available shortlist; not exhaustive city census.",
+    "socialCoverage": "Latest posts unavailable through public fetch; indexed-event fallback checked.",
+    "websiteCoverage": "No current dated Fayetteville event verified on this page."
+  }
+]

@@ -4,6 +4,9 @@ export function buildSourceSummary(e,snapshots=[]){
  if(e.title)parts.push(e.title+'.');
  if(e.date){const d=new Date(e.date+'T12:00:00Z');if(Number.isFinite(+d))parts.push(d.toLocaleDateString('en-US',{timeZone:'UTC',weekday:'long',month:'long',day:'numeric',year:'numeric'})+(e.uncertainFields?.includes('date')?' (date needs confirmation)':'')+'.');}
  const clock=t=>{if(!/^\d{2}:\d{2}$/.test(t||''))return '';const [h,m]=t.split(':').map(Number);return `${h%12||12}:${String(m).padStart(2,'0')} ${h>=12?'PM':'AM'}`};
+ if(e.endDate&&e.endDate!==e.date)parts.push('Through '+e.endDate+'.');
+ if(e.allDay)parts.push('All day.');
+ if(e.scheduleNote)parts.push(e.scheduleNote);
  if(e.time)parts.push(`Starts ${clock(e.time)}${e.endTime?' · ends '+clock(e.endTime)+(e.endDate&&e.endDate!==e.date?' on '+e.endDate:''):''} Central Time.`);
  if(e.venue)parts.push(e.venue+(e.address?' — '+e.address:'')+'.');
  // Doors may only be used when the exact title begins an isolated listing and
