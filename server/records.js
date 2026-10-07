@@ -8,8 +8,9 @@ export function extendedInput(b){
  const rrule=clean(b.rrule,300);if(rrule&&!/^FREQ=(DAILY|WEEKLY|MONTHLY|YEARLY)(;(INTERVAL|COUNT|UNTIL|BYDAY|BYMONTHDAY|BYMONTH|BYSETPOS|WKST)=[A-Z0-9,+-]+)*$/.test(rrule))throw Error('Invalid RFC 5545 recurrence rule');
  const email=clean(b.organizerEmail,254);if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))throw Error('Invalid organizer email');
  if(b.timezone&&b.timezone!=='America/Chicago')throw Error('Fayetteville events use America/Chicago');
- if(b.uncertainFields&&(!Array.isArray(b.uncertainFields)||b.uncertainFields.length>15||b.uncertainFields.some(f=>!['title','date','time','endTime','endDate','allDay','scheduleNote','venue','address','recurrence','organizerName','organizerUrl','description','source'].includes(f))))throw Error('Invalid uncertainty fields');
- return {uncertainFields:b.uncertainFields||[],timezone:'America/Chicago',recurrence,rrule,organizerName:clean(b.organizerName),organizerUrl:https(clean(b.organizerUrl,2000)),organizerEmail:email,organizerPhone:clean(b.organizerPhone,60)};
+ if(b.uncertainFields&&(!Array.isArray(b.uncertainFields)||b.uncertainFields.length>15||b.uncertainFields.some(f=>!['title','date','time','endTime','endDate','allDay','scheduleNote','sessions','civicNotice','locationUrl','venue','address','recurrence','organizerName','organizerUrl','description','source'].includes(f))))throw Error('Invalid uncertainty fields');
+ if(b.civicNotice&&!['early-voting','election-day'].includes(b.civicNotice))throw Error('Invalid civic notice');
+ return {civicNotice:b.civicNotice||'',locationUrl:https(clean(b.locationUrl,2000)),uncertainFields:b.uncertainFields||[],timezone:'America/Chicago',recurrence,rrule,organizerName:clean(b.organizerName),organizerUrl:https(clean(b.organizerUrl,2000)),organizerEmail:email,organizerPhone:clean(b.organizerPhone,60)};
 }
 // SQL statements are conditional on the committed revision. A concurrent decision cannot
 // leave relationships/evidence belonging to a different version of the event.
@@ -20,10 +21,12 @@ export async function recordStatements(env,e,eventId,revision,research,runId,dec
  const vk=[e.venue,e.address].map(v=>v.trim().toLowerCase()).join('|'),vid=await digest(vk);
  out.push(q(`INSERT OR IGNORE INTO venues(id,identity_key,name,address,city) SELECT ?,?,?,?,? WHERE ${guard}`,vid,vk,e.venue,e.address,city,...g));
  let ok='',oid='';if(e.organizerName){ok=[e.organizerName,e.organizerUrl,e.organizerEmail,e.organizerPhone].map(v=>v.toLowerCase()).join('|');oid=await digest(ok);out.push(q(`INSERT OR IGNORE INTO organizers SELECT ?,?,?,?,?,? WHERE ${guard}`,oid,ok,e.organizerName,e.organizerUrl,e.organizerEmail,e.organizerPhone,...g));}
- out.push(q(`UPDATE events SET venue_id=(SELECT id FROM venues WHERE identity_key=?),organizer_id=?,timezone=?,recurrence=?,rrule=?,uncertain_fields=? WHERE id=? AND ${guard}`,vk,oid||null,e.timezone,e.recurrence,e.rrule,JSON.stringify(e.uncertainFields),eventId,...g));
+ out.push(q(`UPDATE events SET venue_id=(SELECT id FROM venues WHERE identity_key=?),organizer_id=?,timezone=?,recurrence=?,rrule=?,uncertain_fields=?,civic_notice=?,location_url=? WHERE id=? AND ${guard}`,vk,oid||null,e.timezone,e.recurrence,e.rrule,JSON.stringify(e.uncertainFields),e.civicNotice,e.locationUrl,eventId,...g));
  out.push(q(`DELETE FROM event_categories WHERE event_id=? AND ${guard}`,eventId,...g));
  out.push(q(`INSERT INTO event_categories SELECT ?,? WHERE ${guard}`,eventId,e.category,...g));
  out.push(q(`INSERT INTO event_occurrences SELECT ?,?,?,?,?,?,? WHERE ${guard} ON CONFLICT(id) DO UPDATE SET start_date=excluded.start_date,start_time=excluded.start_time,end_date=excluded.end_date,end_time=excluded.end_time,timezone=excluded.timezone`,eventId,eventId,e.date||null,e.time||null,e.endDate||e.date||null,e.endTime||null,e.timezone,...g));
+ out.push(q(`DELETE FROM event_sessions WHERE event_id=? AND ${guard}`,eventId,...g));
+ if(e.sessions?.length)out.push(q(`INSERT INTO event_sessions SELECT ?,json_extract(value,'$.date'),json_extract(value,'$.startTime'),json_extract(value,'$.endTime') FROM json_each(?) WHERE ${guard}`,eventId,JSON.stringify(e.sessions),...g));
  if(!research)return out;
  const refs=new Map();
  for(const s of research.snapshots){const h=await digest(s.text),sid=await digest(s.url+'|'+h),sourceId=await digest(s.url);refs.set(s.url,sid);
@@ -38,7 +41,7 @@ export function validateResearch(r){
  if(!r||!Array.isArray(r.snapshots)||r.snapshots.length>5||!Array.isArray(r.claims)||r.claims.length>30||!Array.isArray(r.steps)||r.steps.length>20)throw Error('Invalid evidence bundle');
  let total=0;
  for(const s of r.snapshots){s.url=https(s.url);if(!s.url||typeof s.text!=='string'||(total+=s.text.length)>22000||!['ok','blocked','error'].includes(s.status)||!/^\d{4}-\d\d-\d\dT/.test(s.fetchedAt)||!Number.isFinite(Date.parse(s.fetchedAt)))throw Error('Invalid source snapshot');}
- for(const c of r.claims){if(!['title','date','time','endTime','endDate','allDay','scheduleNote','venue','address','recurrence','organizerName','organizerUrl','organizerEmail','organizerPhone','description','price'].includes(c.field)||typeof c.quote!=='string'||!c.quote.trim()||c.quote.length>1200||!['structured','text','manual','inferred'].includes(c.method))throw Error('Invalid field evidence');const s=r.snapshots.find(s=>s.url===c.url&&s.status==='ok');if(!s||!s.text.includes(c.quote))throw Error('Evidence quote not found in captured source');}
+ for(const c of r.claims){if(!['title','date','time','endTime','endDate','allDay','scheduleNote','sessions','civicNotice','locationUrl','venue','address','recurrence','organizerName','organizerUrl','organizerEmail','organizerPhone','description','price'].includes(c.field)||typeof c.quote!=='string'||!c.quote.trim()||c.quote.length>1200||!['structured','text','manual','inferred'].includes(c.method))throw Error('Invalid field evidence');const s=r.snapshots.find(s=>s.url===c.url&&s.status==='ok');if(!s||!s.text.includes(c.quote))throw Error('Evidence quote not found in captured source');}
  for(const s of r.steps)for(const [k,n]of [['stage',60],['rule',100],['outcome',60],['detail',1500]])if(typeof s[k]!=='string'||s[k].length>n)throw Error('Invalid crawl decision step');
  return r;
 }

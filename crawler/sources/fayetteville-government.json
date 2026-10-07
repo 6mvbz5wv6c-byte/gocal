@@ -1,0 +1,16 @@
+{
+  "region": "fayetteville",
+  "seedZip": "72701",
+  "timezone": "America/Chicago",
+  "jurisdictionNote": "ZIP is a discovery seed, not a municipal boundary or voting precinct. City planning covers the city; county planning serves a different jurisdiction. Voting location eligibility must use official election authorities.",
+  "checkedAt": "2026-10-07",
+  "sources": [
+    {"name":"Fayetteville public meetings","url":"https://www.fayetteville-ar.gov/calendar.aspx?CID=14&month=10&view=list&year=2026","notes":"Follow current detail links. Adapter crawler/civic.js isolates before Related Events. Reject test/cancelled/out-of-window entries. Preserve Tentative and immediately-following flags. Monthly query parameters must advance with the target window."},
+    {"name":"Fayetteville planning and zoning","url":"https://www.fayetteville-ar.gov/698/Planning-Zoning","notes":"Discover current public hearing notices and official agenda links. Never infer a rezoning case from a general meeting title or reuse prior-year notices."},
+    {"name":"Fayetteville official agendas (CivicClerk)","url":"https://fayettevillear.portal.civicclerk.com/","notes":"Official delegated agenda provider. October 8 event 1482 and October 12 event 1518 overview pages say agenda information will appear once published. Revisit for case numbers, parcel addresses, public-comment deadlines, amendments and cancellations."},
+    {"name":"Fayetteville community news","url":"https://www.fayetteville-ar.gov/list.aspx?PRVMSG=167","notes":"Follow dated public-service workshops and community announcements; dates in publication metadata are not necessarily event dates."},
+    {"name":"Washington County planning meetings","url":"https://www.washingtoncountyar.gov/government/departments-f-z/planning/meetings","notes":"Read current-year Planning/ZBA meeting column, not technical review or submission deadline columns. Direct HTTP blocked during this run; official indexed text used, marked in evidence. Public meeting Oct 29/Dec 3 at 5pm; case-specific agenda unverified."},
+    {"name":"Washington County early voting 2026","url":"https://www.washingtoncountyar.gov/government/departments-a-e/election-commission/early-vote-sites-for-the-november-3-2026-election","notes":"Site-specific weekly table plus final-day exception. Courthouse Oct 19–Nov 2; Sundays closed; Nov 2 courthouse-only 8–5. Different sites have different hours. Check emergency updates before publication and before upcoming voting days. Direct HTTP blocked; indexed official text used."},
+    {"name":"Washington County November 3 election information","url":"https://www.washingtoncountyar.gov/government/departments-a-e/election-commission/november-3-2026-general-election-information","notes":"Election Day Nov 3 7:30am–7:30pm. Location table currently TBD; use explicit location lookup and never borrow filing-office or early-vote addresses. Direct HTTP blocked; indexed official text used."}
+  ]
+}

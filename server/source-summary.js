@@ -7,7 +7,8 @@ export function buildSourceSummary(e,snapshots=[]){
  if(e.endDate&&e.endDate!==e.date)parts.push('Through '+e.endDate+'.');
  if(e.allDay)parts.push('All day.');
  if(e.scheduleNote)parts.push(e.scheduleNote);
- if(e.time)parts.push(`Starts ${clock(e.time)}${e.endTime?' · ends '+clock(e.endTime)+(e.endDate&&e.endDate!==e.date?' on '+e.endDate:''):''} Central Time.`);
+ if(e.sessions?.length)parts.push(`${e.sessions.length} opening dates; see the daily hours. Dates not listed are closed.`);
+ if(e.time&&!e.sessions?.length)parts.push(`Starts ${clock(e.time)}${e.endTime?' · ends '+clock(e.endTime)+(e.endDate&&e.endDate!==e.date?' on '+e.endDate:''):''} Central Time.`);
  if(e.venue)parts.push(e.venue+(e.address?' — '+e.address:'')+'.');
  // Doors may only be used when the exact title begins an isolated listing and
  // a purchase boundary terminates it before another show's text.

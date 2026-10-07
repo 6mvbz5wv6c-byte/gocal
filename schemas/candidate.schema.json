@@ -44,7 +44,8 @@
         "community",
         "outdoors",
         "food",
-        "learning"
+        "learning",
+        "civics"
       ]
     },
     "price": {
@@ -119,7 +120,10 @@
           "description",
           "source",
           "allDay",
-          "scheduleNote"
+          "scheduleNote",
+          "sessions",
+          "civicNotice",
+          "locationUrl"
         ]
       }
     },
@@ -238,6 +242,41 @@
     "scheduleNote": {
       "type": "string",
       "maxLength": 1000
+    },
+    "civicNotice": {
+      "enum": [
+        "",
+        "early-voting",
+        "election-day"
+      ]
+    },
+    "locationUrl": {
+      "$ref": "#/$defs/url"
+    },
+    "sessions": {
+      "type": "array",
+      "maxItems": 366,
+      "description": "Explicit opening dates; omitted dates are closed. One parent event, one row per open day.",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "date",
+          "startTime",
+          "endTime"
+        ],
+        "properties": {
+          "date": {
+            "$ref": "#/$defs/date"
+          },
+          "startTime": {
+            "$ref": "#/$defs/time"
+          },
+          "endTime": {
+            "$ref": "#/$defs/time"
+          }
+        }
+      }
     }
   },
   "$defs": {

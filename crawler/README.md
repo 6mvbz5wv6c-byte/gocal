@@ -68,3 +68,13 @@ current database again before applying a plan and preserve concurrent edits.
 ## Multi-day events
 
 A festival or exhibition can use one candidate with `date`, inclusive `endDate`, optional final `endTime`, and `scheduleNote` for daily hours/closures. Do not split one festival into daily duplicates. Independent performances on separate dates remain separate events. A missing clock time is unknown; set `allDay: true` only when explicitly supported by source evidence and leave both clock fields empty. Range events require an end date. Conflicting/uncertain fields reduce evidence coverage and still block approval.
+
+## Civic sources and explicit opening dates
+
+`civic.js` parses the Fayetteville CivicPlus meeting-detail layout and flags tentative notices. Government source configuration lives in `sources/fayetteville-government.json`. Voting tables are currently reviewed and normalized with assistance; they are not an autonomous generic election parser.
+
+Optional `sessions: [{date,startTime,endTime}]` stores one opening window per date beneath one event. Omitted dates are closed. The parent range must match the first opening and last closing. Voting notices require sessions, an official registered election source and the Civics category. Election Day may provide `locationUrl` for an official vote-center lookup instead of an invented address. Approval and revision history remain mandatory.
+
+See [`CRAWL_PROCESS.md`](../CRAWL_PROCESS.md) for the exact current workflow, limits, and regional-engine acceptance contract.
+
+For captured civic detail pages (`[{url,text,fetchedAt}, ...]`), run `node scripts/extract-civics.mjs captures.json 2026-10-07 2026-12-31`. This is offline extraction, not automatic fetching.
