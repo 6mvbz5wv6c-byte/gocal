@@ -61,6 +61,36 @@ button:focus-visible,a:focus-visible,.month-control>button:focus-visible,.locati
 @media(max-width:767px){.topbar{background:#ffffffeb}.agenda-list{background:#fff}.month-grid+.agenda-list{border-color:#e1e1e6}}
 @media(prefers-reduced-transparency:reduce){.topbar,.gocal-sidebar [data-slot=sidebar-inner],.calendar-surface,.gocal-dialog,.location-search,.city-result,.review-workspace,.review-table-scroll,.dashboard-stats button{background:#fff;backdrop-filter:none;-webkit-backdrop-filter:none}}
 @supports not (backdrop-filter:blur(1px)){.topbar,.gocal-sidebar [data-slot=sidebar-inner]{background:#fff}}
+/* Quiet glass: compact identity and location, with color reserved for events. */
+.calendar-header{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:18px;min-height:78px;padding:16px 38px;background:#ffffffdb;border-bottom:1px solid #e8e8ec;backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)}
+.calendar-header-leading,.calendar-header-identity{display:flex;align-items:center;gap:20px;min-width:0}
+.calendar-header-brand{display:flex;align-items:center;min-height:44px;color:#26262b;font-size:25px;font-weight:750;letter-spacing:-1.25px;white-space:nowrap;text-decoration:none}
+.calendar-header-divider{height:22px;width:1px;background:#e8e8ec}
+.calendar-header-location{display:flex;align-items:center;gap:6px;min-height:44px;color:#36363d;font-size:13px;font-weight:600;white-space:nowrap;border-radius:6px;text-decoration:none}
+.calendar-header-location svg,.calendar-header-state{color:#64646d}.calendar-header-state{font-weight:400}
+.calendar-header-location:hover{color:#111115;background:#f4f4f680}
+.calendar-header .calendar-header-menu{display:none}
+.calendar-header-submit{min-height:44px;flex-shrink:0;padding:0 16px;border-radius:11px;font-size:13px;font-weight:600;white-space:nowrap}
+.calendar-header-motto{margin:14px 38px 0;font-size:12px;font-weight:600;line-height:1.5;color:#64646d}
+.calendar-header-motto+.calendar-body{padding-top:18px}
+@media(max-width:1180px){.calendar-header{padding-inline:22px}.calendar-header-motto{margin-inline:22px}}
+@media(min-width:768px) and (max-width:900px){.calendar-header{padding-inline:15px;gap:12px}.calendar-header-identity{gap:12px}.calendar-header-motto{margin-inline:15px}}
+@media(max-width:767px){
+ .calendar-header{min-height:78px;padding:10px 12px;gap:8px;background:#ffffffeb}
+ .calendar-header-leading{gap:6px}
+ .calendar-header .calendar-header-menu{display:flex;flex-shrink:0;width:44px;height:44px;margin-left:-6px;color:#55555e}
+ .calendar-header-identity{flex-direction:column;align-items:flex-start;gap:0}
+ .calendar-header-brand{font-size:24px;min-height:30px;line-height:30px}
+ .calendar-header-divider{display:none}
+ .calendar-header-location{font-size:12px;min-height:24px;line-height:24px}
+ .calendar-header-location svg{width:13px;height:13px}
+ .calendar-header-submit{font-size:12px;padding-inline:12px;gap:5px}
+ .calendar-header-motto{margin:12px 12px 0;font-size:11px}
+ .calendar-header-motto+.calendar-body{padding-top:14px}
+}
+@media(max-width:380px){.calendar-header-submit-extra{display:none}}
+@media(prefers-reduced-transparency:reduce){.calendar-header{background:#fff;backdrop-filter:none;-webkit-backdrop-filter:none}}
+@supports not (backdrop-filter:blur(1px)){.calendar-header{background:#fff}}
 @media(max-width:767px){.agenda-event .event-price{white-space:normal;max-width:86px;flex:0 0 auto;text-align:right;line-height:1.5;overflow-wrap:anywhere}}
 
 /* A neutral calendar slate; category color is always paired with an icon/label. */
