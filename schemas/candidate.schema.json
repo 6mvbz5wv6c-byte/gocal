@@ -123,7 +123,10 @@
           "scheduleNote",
           "sessions",
           "civicNotice",
-          "locationUrl"
+          "locationUrl",
+          "organizerEmail",
+          "organizerPhone",
+          "price"
         ]
       }
     },

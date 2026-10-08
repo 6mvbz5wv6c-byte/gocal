@@ -6,3 +6,6 @@ node_modules/
 .wrangler/
 .dev.vars
 *.sqlite
+
+__pycache__/
+*.pyc

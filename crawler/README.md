@@ -78,3 +78,9 @@ Optional `sessions: [{date,startTime,endTime}]` stores one opening window per da
 See [`CRAWL_PROCESS.md`](../CRAWL_PROCESS.md) for the exact current workflow, limits, and regional-engine acceptance contract.
 
 For captured civic detail pages (`[{url,text,fetchedAt}, ...]`), run `node scripts/extract-civics.mjs captures.json 2026-10-07 2026-12-31`. This is offline extraction, not automatic fetching.
+
+## Bounded acquisition and cross-checking (v2)
+
+`capture.py` fetches only the input source URLs within explicit host and resource budgets, enforces robots policy, pins public DNS addresses and captures JSON-LD separately from visible text. `captured-page.js` then compares the exact matched event with its visible schedule, including weekday/ordinal recurrence prose and finish-time contradictions. Supported text layouts: CivicPlus, NWA Today and the Momentary. Unrecognized layouts are deferred; no page-wide regex date reuse. Use the reproducible capture/benchmark/reprocess commands in `CRAWL_PROCESS.md`.
+
+Approval blockers and optional warnings are separate. Unknown address/end/organizer details are not invented to improve completeness. Evidence coverage v2 excludes absent optional fields; this score is not probability or publication authority.

@@ -8,7 +8,7 @@ export function extendedInput(b){
  const rrule=clean(b.rrule,300);if(rrule&&!/^FREQ=(DAILY|WEEKLY|MONTHLY|YEARLY)(;(INTERVAL|COUNT|UNTIL|BYDAY|BYMONTHDAY|BYMONTH|BYSETPOS|WKST)=[A-Z0-9,+-]+)*$/.test(rrule))throw Error('Invalid RFC 5545 recurrence rule');
  const email=clean(b.organizerEmail,254);if(email&&!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email))throw Error('Invalid organizer email');
  if(b.timezone&&b.timezone!=='America/Chicago')throw Error('Fayetteville events use America/Chicago');
- if(b.uncertainFields&&(!Array.isArray(b.uncertainFields)||b.uncertainFields.length>15||b.uncertainFields.some(f=>!['title','date','time','endTime','endDate','allDay','scheduleNote','sessions','civicNotice','locationUrl','venue','address','recurrence','organizerName','organizerUrl','description','source'].includes(f))))throw Error('Invalid uncertainty fields');
+ if(b.uncertainFields&&(!Array.isArray(b.uncertainFields)||b.uncertainFields.length>15||b.uncertainFields.some(f=>!['title','date','time','endTime','endDate','allDay','scheduleNote','sessions','civicNotice','locationUrl','venue','address','recurrence','organizerName','organizerUrl','organizerEmail','organizerPhone','description','source','price'].includes(f))))throw Error('Invalid uncertainty fields');
  if(b.civicNotice&&!['early-voting','election-day'].includes(b.civicNotice))throw Error('Invalid civic notice');
  return {civicNotice:b.civicNotice||'',locationUrl:https(clean(b.locationUrl,2000)),uncertainFields:b.uncertainFields||[],timezone:'America/Chicago',recurrence,rrule,organizerName:clean(b.organizerName),organizerUrl:https(clean(b.organizerUrl,2000)),organizerEmail:email,organizerPhone:clean(b.organizerPhone,60)};
 }
@@ -19,9 +19,9 @@ export async function recordStatements(env,e,eventId,revision,research,runId,dec
  const guard='EXISTS(SELECT 1 FROM events WHERE id=? AND revision=?)'+(decisionId?' AND EXISTS(SELECT 1 FROM moderation_decisions WHERE id=?)':''),g=[eventId,revision,...(decisionId?[decisionId]:[])];
  const city=/\bBentonville\b/i.test(e.address)?'Bentonville':/\bRogers\b/i.test(e.address)?'Rogers':'Fayetteville';
  const vk=[e.venue,e.address].map(v=>v.trim().toLowerCase()).join('|'),vid=await digest(vk);
- out.push(q(`INSERT OR IGNORE INTO venues(id,identity_key,name,address,city) SELECT ?,?,?,?,? WHERE ${guard}`,vid,vk,e.venue,e.address,city,...g));
+ if(e.venue||e.address)out.push(q(`INSERT OR IGNORE INTO venues(id,identity_key,name,address,city) SELECT ?,?,?,?,? WHERE ${guard}`,vid,vk,e.venue,e.address,city,...g));
  let ok='',oid='';if(e.organizerName){ok=[e.organizerName,e.organizerUrl,e.organizerEmail,e.organizerPhone].map(v=>v.toLowerCase()).join('|');oid=await digest(ok);out.push(q(`INSERT OR IGNORE INTO organizers SELECT ?,?,?,?,?,? WHERE ${guard}`,oid,ok,e.organizerName,e.organizerUrl,e.organizerEmail,e.organizerPhone,...g));}
- out.push(q(`UPDATE events SET venue_id=(SELECT id FROM venues WHERE identity_key=?),organizer_id=?,timezone=?,recurrence=?,rrule=?,uncertain_fields=?,civic_notice=?,location_url=? WHERE id=? AND ${guard}`,vk,oid||null,e.timezone,e.recurrence,e.rrule,JSON.stringify(e.uncertainFields),e.civicNotice,e.locationUrl,eventId,...g));
+ out.push(q(`UPDATE events SET venue_id=(SELECT id FROM venues WHERE identity_key=?),organizer_id=?,timezone=?,recurrence=?,rrule=?,uncertain_fields=?,civic_notice=?,location_url=? WHERE id=? AND ${guard}`,e.venue||e.address?vk:null,oid||null,e.timezone,e.recurrence,e.rrule,JSON.stringify(e.uncertainFields),e.civicNotice,e.locationUrl,eventId,...g));
  out.push(q(`DELETE FROM event_categories WHERE event_id=? AND ${guard}`,eventId,...g));
  out.push(q(`INSERT INTO event_categories SELECT ?,? WHERE ${guard}`,eventId,e.category,...g));
  out.push(q(`INSERT INTO event_occurrences SELECT ?,?,?,?,?,?,? WHERE ${guard} ON CONFLICT(id) DO UPDATE SET start_date=excluded.start_date,start_time=excluded.start_time,end_date=excluded.end_date,end_time=excluded.end_time,timezone=excluded.timezone`,eventId,eventId,e.date||null,e.time||null,e.endDate||e.date||null,e.endTime||null,e.timezone,...g));

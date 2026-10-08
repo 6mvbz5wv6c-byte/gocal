@@ -1,0 +1,126 @@
+{
+  "method": "Same-source metadata and visible text agreement is corroboration, not independent verification. Ready means a human may review; never auto-publish.",
+  "compared": 12,
+  "metadataOnlyReady": 12,
+  "crossCheckedReady": 7,
+  "conflictingRecords": 5,
+  "rows": [
+    {
+      "title": "Six Twelve Art Social",
+      "source": "https://thenwatoday.com/events/six-twelve-art-social-2026-10-08",
+      "metadataOnlyReady": true,
+      "crossCheckedReady": false,
+      "conflicts": [
+        {
+          "field": "date",
+          "message": "Described repeat weekday/ordinal disagrees with the listed date"
+        },
+        {
+          "field": "endTime",
+          "message": "Event description end disagrees with metadata"
+        }
+      ]
+    },
+    {
+      "title": "Mike Bewley Live at Six Twelve",
+      "source": "https://thenwatoday.com/events/mike-bewley-live-at-six-twelve-2026-10-10",
+      "metadataOnlyReady": true,
+      "crossCheckedReady": false,
+      "conflicts": [
+        {
+          "field": "endTime",
+          "message": "Event description end disagrees with metadata"
+        }
+      ]
+    },
+    {
+      "title": "Trivia Night at Flyway",
+      "source": "https://thenwatoday.com/events/trivia-night-at-flyway-2026-10-12",
+      "metadataOnlyReady": true,
+      "crossCheckedReady": true,
+      "conflicts": []
+    },
+    {
+      "title": "Board Game Night!",
+      "source": "https://thenwatoday.com/events/board-game-night-2026-10-13",
+      "metadataOnlyReady": true,
+      "crossCheckedReady": true,
+      "conflicts": []
+    },
+    {
+      "title": "Music Match Trivia at Flyway Brewing",
+      "source": "https://thenwatoday.com/events/music-match-trivia-at-flyway-brewing-2026-10-13",
+      "metadataOnlyReady": true,
+      "crossCheckedReady": true,
+      "conflicts": []
+    },
+    {
+      "title": "Fay Beer Works Craft Nights",
+      "source": "https://thenwatoday.com/events/fay-beer-works-craft-nights-2026-10-14",
+      "metadataOnlyReady": true,
+      "crossCheckedReady": true,
+      "conflicts": []
+    },
+    {
+      "title": "Six Twelve Art Social",
+      "source": "https://thenwatoday.com/events/six-twelve-art-social-2026-10-15",
+      "metadataOnlyReady": true,
+      "crossCheckedReady": false,
+      "conflicts": [
+        {
+          "field": "date",
+          "message": "Described repeat weekday/ordinal disagrees with the listed date"
+        },
+        {
+          "field": "endTime",
+          "message": "Event description end disagrees with metadata"
+        }
+      ]
+    },
+    {
+      "title": "Trivia Night at FBW",
+      "source": "https://thenwatoday.com/events/trivia-night-at-fbw-2026-10-15",
+      "metadataOnlyReady": true,
+      "crossCheckedReady": true,
+      "conflicts": []
+    },
+    {
+      "title": "Roll Cage Mary @ SixTwelve Coffeehouse and Bar",
+      "source": "https://thenwatoday.com/events/roll-cage-mary-sixtwelve-coffeehouse-and-bar-2026-10-15",
+      "metadataOnlyReady": true,
+      "crossCheckedReady": true,
+      "conflicts": []
+    },
+    {
+      "title": "Mark Currey Live @ Six Twelve",
+      "source": "https://thenwatoday.com/events/mark-currey-live-six-twelve-2026-10-17",
+      "metadataOnlyReady": true,
+      "crossCheckedReady": true,
+      "conflicts": []
+    },
+    {
+      "title": "Food and Film | Steel Magnolias",
+      "source": "https://themomentary.org/calendar/food-and-film-steel-magnolias/",
+      "metadataOnlyReady": true,
+      "crossCheckedReady": false,
+      "conflicts": [
+        {
+          "field": "time",
+          "message": "Visible start 15:00 disagrees with JSON-LD 11:00"
+        }
+      ]
+    },
+    {
+      "title": "Cut Copy (DJ Set) & The Faint",
+      "source": "https://themomentary.org/calendar/cut-copy-dj-set-the-faint/",
+      "metadataOnlyReady": true,
+      "crossCheckedReady": false,
+      "conflicts": [
+        {
+          "field": "time",
+          "message": "Visible start 20:00 disagrees with JSON-LD 21:00"
+        }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "date": "2026-10-08",
+  "deployment": "0c04262f-b65d-451c-8036-99ef5ef96949",
+  "capturedUniqueUrls": 120,
+  "successfulCaptures": 117,
+  "pendingReviewed": 124,
+  "enriched": 112,
+  "deferred": 12,
+  "errors": [],
+  "venuesRecovered": 6,
+  "improvedUnderPreviousScoringFormula": 19,
+  "higherV2Scores": 107,
+  "readyBefore": 13,
+  "readyAfter": 21,
+  "countsBefore": {
+    "pending": 124,
+    "approved": 126,
+    "rejected": 21
+  },
+  "countsAfter": {
+    "pending": 124,
+    "approved": 126,
+    "rejected": 21
+  },
+  "nonpendingRecordsChanged": [],
+  "tests": {
+    "node": 77,
+    "schema": 7,
+    "capture": 4,
+    "localReviewAPI": 19,
+    "localCivicAPI": 22,
+    "localInlineAPI": 13
+  }
+}
