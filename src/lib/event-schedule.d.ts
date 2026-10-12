@@ -6,3 +6,6 @@ export function eventInMonth(e:CalEvent,month:string,focusDate?:string|null):boo
 export function eventTimeLabel(e:CalEvent,date?:string):string;
 export function eventDateLabel(e:CalEvent):string;
 export function eventCalendarFile(e:CalEvent,stamp?:Date):string;
+
+export function regionToday(now?:Date):string;
+export function upcomingEntries(events:CalEvent[],today:string,focusDate?:string|null):{event:CalEvent;date:string;sortTime:string}[];

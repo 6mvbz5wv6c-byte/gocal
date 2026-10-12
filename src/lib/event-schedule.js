@@ -22,3 +22,22 @@ export function eventCalendarFile(e,stamp=new Date()){
  const fold=line=>{let out='',size=0;for(const ch of line){const n=new TextEncoder().encode(ch).length;if(size+n>75){out+='\r\n ';size=1}out+=ch;size+=n}return out};
  return lines.map(fold).join('\r\n')+'\r\n';
 }
+
+// Region-local dates keep travelling visitors and midnight rollover aligned with the calendar.
+export function regionToday(now=new Date()){
+ const parts=new Intl.DateTimeFormat('en-US',{timeZone:'America/Chicago',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(now);
+ const part=type=>parts.find(p=>p.type===type).value;return `${part('year')}-${part('month')}-${part('day')}`;
+}
+// One row per event; ongoing ranges and the next explicit opening session stay discoverable.
+export function upcomingEntries(events,today,focusDate=null){
+ if(focusDate&&focusDate<today)return [];
+ const from=focusDate||today;
+ return events.flatMap(event=>{
+  if(focusDate&&!eventOnDate(event,focusDate))return [];
+  const session=event.sessions?.length?[...event.sessions].sort((a,b)=>(a.date+a.startTime).localeCompare(b.date+b.startTime)).find(s=>focusDate?s.date===focusDate:s.date>=from):null;
+  if(event.sessions?.length&&!session)return [];
+  if(!session&&(!event.date||lastEventDate(event)<from))return [];
+  const date=session?.date||(event.date<from?from:event.date);
+  return [{event,date,sortTime:session?.startTime||(event.allDay||date>event.date?'':event.time||'')}];
+ }).sort((a,b)=>a.date.localeCompare(b.date)||a.sortTime.localeCompare(b.sortTime)||a.event.title.localeCompare(b.event.title)||a.event.id.localeCompare(b.event.id));
+}
