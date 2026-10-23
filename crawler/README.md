@@ -84,3 +84,8 @@ For captured civic detail pages (`[{url,text,fetchedAt}, ...]`), run `node scrip
 `capture.py` fetches only the input source URLs within explicit host and resource budgets, enforces robots policy, pins public DNS addresses and captures JSON-LD separately from visible text. `captured-page.js` then compares the exact matched event with its visible schedule, including weekday/ordinal recurrence prose and finish-time contradictions. Supported text layouts: CivicPlus, NWA Today and the Momentary. Unrecognized layouts are deferred; no page-wide regex date reuse. Use the reproducible capture/benchmark/reprocess commands in `CRAWL_PROCESS.md`.
 
 Approval blockers and optional warnings are separate. Unknown address/end/organizer details are not invented to improve completeness. Evidence coverage v2 excludes absent optional fields; this score is not probability or publication authority.
+
+
+## Ozark Music Hall
+
+`ozark.js` handles official show details plus isolated organizer ticket cards; see the October 23 section of `CRAWL_PROCESS.md` for card format, assisted acquisition limits, reconciliation and known conflicts. `scripts/extract-ozark.mjs` prepares pending candidates offline. The enabled source registry is not a crawl scheduler. Tests cover doors vs. show time, explicit year, exact card identity, weekday/doors conflicts and conflicting prose years.

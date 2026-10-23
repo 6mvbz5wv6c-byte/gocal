@@ -1,0 +1,14 @@
+{
+  "region": "fayetteville",
+  "seedZip": "72701",
+  "sources": [{
+    "name": "Ozark Music Hall (formerly JJ’s Live)",
+    "url": "https://ozarkmusichall.com/shows/",
+    "venue": "Ozark Music Hall",
+    "aliases": ["JJ's Live", "JJ’s Live"],
+    "address": "3615 N. Steele Blvd, Fayetteville, AR",
+    "adapter": "ozark-detail/v1",
+    "ticketCalendar": "https://www.prekindle.com/events/ozark-music-hall",
+    "notes": "Fayetteville city venue outside the seed ZIP. Read every linked show detail for explicit year; isolate ticket cards for show start. Doors are not show times. Venue and ticket provider postal codes disagree, so use agreed street/city/state. Missing starts and year conflicts stay flagged. Read all moderation statuses, recognize historical venue aliases, then import unmatched candidates as pending only. Source registration is not an enabled recurring crawler."
+  }]
+}

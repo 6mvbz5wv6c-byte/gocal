@@ -13,7 +13,7 @@ import {categories,CalEvent,timeLabel,priceLabel} from '@/lib/events';
 export type Session={user:{id:string;name:string;email:string;role:string}|null;adminConfigured:boolean;aiConfigured:boolean};
 export async function api<T=Record<string,unknown>>(path:string,payload?:unknown):Promise<T>{
  const res=await fetch('/api/'+path,{method:payload===undefined?'GET':'POST',credentials:'same-origin',headers:payload===undefined?{}:{'Content-Type':'application/json'},body:payload===undefined?undefined:JSON.stringify(payload),cache:'no-store'});
- const data=await res.json();if(!res.ok)throw new Error(data.error||'Request failed.');return data as T;
+ const data=await res.json();if(res.status===401&&path.startsWith('admin/'))window.dispatchEvent(new Event('findout-session-expired'));if(!res.ok)throw new Error(data.error||'Request failed.');return data as T;
 }
 function Choice({name,value,onChange,items}:{name:string;value:string;onChange:(v:string)=>void;items:{value:string;label:string}[]}){return <Select name={name} value={value} onValueChange={onChange}><SelectTrigger className="form-select"><SelectValue/></SelectTrigger><SelectContent>{items.map(i=><SelectItem value={i.value} key={i.value}>{i.label}</SelectItem>)}</SelectContent></Select>}
 export function Submission({session,onDone}:{session:Session|null;onDone:()=>void}){

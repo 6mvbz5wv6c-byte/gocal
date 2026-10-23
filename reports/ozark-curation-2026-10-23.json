@@ -1,0 +1,60 @@
+{
+  "date": "2026-10-23",
+  "source": "https://ozarkmusichall.com/shows/",
+  "ticketSource": "https://www.prekindle.com/events/ozark-music-hall",
+  "inserted": 28,
+  "ready": 26,
+  "existingChanged": 0,
+  "countsBefore": {
+    "pending": 99,
+    "approved": 151,
+    "rejected": 21
+  },
+  "countsAfter": {
+    "pending": 127,
+    "approved": 151,
+    "rejected": 21
+  },
+  "pendingLanes": {
+    "expired": 29,
+    "shortlist": 31,
+    "routine": 58,
+    "civic": 9
+  },
+  "defaultShortlist": 40,
+  "flags": [
+    {
+      "title": "Morgan Page",
+      "issues": [
+        {
+          "field": "time",
+          "code": "missing",
+          "message": "UNABLE TO DETERMINE \u2014 required before publishing"
+        }
+      ]
+    },
+    {
+      "title": "Braxton Keith",
+      "issues": [
+        {
+          "field": "date",
+          "code": "uncertain",
+          "message": "Source is ambiguous or inferred: confirm before approval"
+        }
+      ]
+    }
+  ],
+  "notes": [
+    "28 official detail captures; 27 isolated ticket cards read through search-service rendering. Direct ticket robots retrieval unavailable; AXS direct returned 403.",
+    "Year is taken from each official venue detail; start times come from matched tickets. Morgan Page start missing, Braxton Keith conflicting years.",
+    "Curation uses transparent rules; no existing moderation status changed and no event published.",
+    "Temporary ingest token revoked after import. No recurring automation installed."
+  ],
+  "deployment": "a56e48fe-2542-4b33-b8c9-0f7495a4a8c3",
+  "tests": {
+    "node": 94,
+    "schema": 7,
+    "capture": 4,
+    "ui": "Disposable preview: curation filters, ready-only batch approval, 25 blocked-record denials, in-place reauthentication preserves edits, 390px containment"
+  }
+}
