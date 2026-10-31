@@ -1,0 +1,69 @@
+{
+  "region": "fayetteville",
+  "seedZip": "72701",
+  "sourceScanDate": "2026-10-27",
+  "registeredAt": "2026-10-30",
+  "schedulerInstalled": false,
+  "sources": [
+    {
+      "name": "Crisis Brewing",
+      "url": "https://crisisbrew.com/home/",
+      "socialSources": [
+        "https://www.instagram.com/crisisbrewingco/"
+      ],
+      "notes": "2 new Drinks & Dialogue dates: Nov 4 and Dec 2. Official organizer checked."
+    },
+    {
+      "name": "Columbus House Brewery",
+      "url": "https://columbushousebrewery.com/",
+      "socialSources": [],
+      "notes": "Nov 25 race packet pickup; Turkey Trot is Nov 26 at Upper Ramble. Weekly ride lacks dated start; not extrapolated."
+    },
+    {
+      "name": "Flyway Brewing — Fayetteville",
+      "url": "https://www.flywaybrewing.com/fayetteville",
+      "socialSources": [
+        "https://www.instagram.com/flywayfayetteville/"
+      ],
+      "notes": "Nov 4 Books & Brews plus 8 explicitly dated Tuesday trivia occurrences through Dec 22. Primary organizer corroborates weekly time; individual trivia dates from NWA Today."
+    },
+    {
+      "name": "WORD Coffee",
+      "url": "https://www.wordnwa.com/",
+      "socialSources": [
+        "https://www.instagram.com/wordcoffee.nwa/"
+      ],
+      "notes": "Nov 10 coffee tasting. Address conflict: FIRA says South College; venue says North College. Flagged."
+    },
+    {
+      "name": "Sicarú Coffee",
+      "url": "https://www.sicarucoffeeroasters.com/events",
+      "socialSources": [
+        "https://www.instagram.com/sicarucoffee/"
+      ],
+      "notes": "Nov 2 and Dec 7 food-community meetings already approved; preserved. Own event page only showed expired March/April dates."
+    },
+    {
+      "name": "Fossil Cove Brewing",
+      "url": "https://www.fossilcovebrewing.com/visit-us",
+      "socialSources": [
+        "https://www.instagram.com/fossilcovebrewing/"
+      ],
+      "notes": "No new confirmed Nov/Dec public event from accessible primary pages. October book fair and February Frost Fest excluded."
+    },
+    {
+      "name": "Nomads Trailside",
+      "url": "https://www.facebook.com/nomadstrailside/",
+      "socialSources": [
+        "https://www.instagram.com/nomadstrailside/"
+      ],
+      "notes": "New source. Dec 12 Empyrean / Grand Inquisitor / My Nightmare, show 8 PM, doors 7 PM. Artist primary detail confirms Pluto Drive address."
+    },
+    {
+      "name": "Kingfish Bar — School Avenue",
+      "url": "https://www.kingfishbar.com/calendar",
+      "socialSources": [],
+      "notes": "New source at 262 N School Ave. Official calendar says No events at the moment; no winter dates invented."
+    }
+  ]
+}
