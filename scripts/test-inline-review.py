@@ -16,7 +16,7 @@ try:
   return next(e for e in call('admin/events?status='+status)[0]['events'] if e['title']==event['title'])
  row=current();assert row['issues']==[]
  text=event['title']+' November 10, 2026 at 18:00';research={'snapshots':[{'url':event['source'],'text':text,'fetchedAt':'2026-10-08T12:00:00Z','status':'ok'}],'claims':[{'field':f,'quote':q,'url':event['source'],'method':'text'} for f,q in [('title',event['title']),('date','November 10, 2026'),('time','18:00')]],'steps':[]}
- def edit(row,action='save',**patch):return {'id':row['id'],'revision':row['revision'],'event':dict(row,**patch),'action':action,'confirmed':action=='approve','reason':'Synthetic local inline review'}
+ def edit(row,action='save',**patch):return {'id':row['id'],'revision':row['revision'],'event':dict(row,**patch),'action':action,'confirmed':action=='approve'}
  call('admin/event',edit(row,'enrich',research=research));row=current();assert row['score']==100
  # A client cannot keep 100 after replacing a field and losing its evidence.
  call('admin/event',edit(row,time='19:00',score=100));changed=current();assert changed['score']<100
@@ -28,5 +28,14 @@ try:
  call('admin/event',edit(changed,'approve'))
  approved=current('approved');assert approved['status']=='approved';assert approved['venue']=='';assert approved['address']=='';assert not approved['endTime']
  proof=call('admin/evidence?id='+row['id'])[0];assert len(proof['history'])==3;assert all(c['field']!='time' for c in proof['claims'])
+ # Missing notes must not block uncertainty confirmation, but unresolved fields still block.
+ call('admin/event',edit(approved,'save',uncertainFields=['time']))
+ flagged=current();call('admin/event',edit(flagged,'approve'),400)
+ call('admin/event',edit(flagged,'approve',uncertainFields=[]))
+ final=current('approved');history=call('admin/evidence?id='+final['id'])[0]['history']
+ assert history[0]['reason']=='Approved by reviewer. Confirmed fields: time.'
+ assert history[0]['actor']==login['email']
+ assert history[0]['from_revision']==flagged['revision']
+ assert history[0]['to_revision']==final['revision']
  print(f'{checks} inline review API checks passed: optional fields, score tampering, dropped stale claims, inferred flags, revision conflicts, and approval history.')
 finally:call('logout',{})

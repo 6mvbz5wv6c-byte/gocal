@@ -48,7 +48,7 @@ Use `scripts/push-candidates.py crawl.json --site https://findout.events` with `
 
 No paid plan is enabled by these deployment scripts. There is no Droplet, paid email service, R2 upload pipeline, cloud model, or cloud browser. Workers and D1 are intended for their free quotas. Account billing cannot be inferred from a zone's Free Website plan; confirm Workers is on Free in the Cloudflare billing dashboard. The existing OAuth scope cannot read subscriptions. On Workers Free, exhausting the quota affects availability; do not automatically upgrade. Domain renewal and local electricity remain separate.
 
-Application write limits: community submissions 5/hour/IP and 200/day globally; reports 5/hour/IP and 200/day globally; agent batches 24/day; admin requests 600/hour/account. These are abuse controls, not a provider-wide dollar cap. Cloudflare platform quotas remain the outer bound. Public pages use static asset delivery; API reads are indexed and bounded.
+Application write limits: community submissions 5/hour/IP and 200/day globally; reports 5/hour/IP and 200/day globally; agent ingestion requests 120/day; admin requests 600/hour/account. These are abuse controls, not a provider-wide dollar cap. Cloudflare platform quotas remain the outer bound. Public pages use static asset delivery; API reads are indexed and bounded.
 
 A daily cleanup removes expired sessions/rate counters only. Crawl evidence and approval history are retained; monitor D1 storage and keep private backups. It does not perform crawling or delete calendar records. Export data periodically. For a full SQL backup:
 
@@ -65,3 +65,86 @@ That file includes authentication hashes: store it privately, not in Git. D1 Tim
 ## Review dashboard and schema
 
 See `DATA_MODEL.md` for relational tables, provenance, analytics views, field completeness, and test coverage. The dashboard has one event per row with Approve, Deny, Modify and evidence preview. Clicking Approve is an explicit human publication decision. Unknown fields and ambiguous facts must be resolved first. The extraction component is tested; an unattended local model/crawler service is still not installed.
+
+
+## Admin friction and unattended operation — October 30, 2026
+
+Implemented: moderation notes are optional in single-row decisions, event details,
+bulk approvals/denials and uncertainty confirmations. The server supplies an action
+summary plus the names of confirmed fields. Actor, revision, changed values and
+explicit approval remain in the audit ledger. This does not change authentication.
+
+Recommended identity migration (not yet configured): Cloudflare Access email OTP
+restricted to stover@pm.me; map verified identity to the enabled D1 user and existing
+role. For stronger protection use an identity provider with passkeys/MFA. Protect
+both admin UI and admin API, with equivalent protection on www and workers.dev or
+remove alternate origins. Validate signed identity/audience at the application,
+never trust an unsigned email header. Do not stack Access and the current password
+form as two everyday logins. Keep a separately controlled recovery procedure and
+confirm the new flow before retiring the old password path.
+
+### Proposed local service architecture (not installed)
+
+Keep Cloudflare Workers/D1 for the public site and the M2 mini for collection and
+model inference. No Droplet is needed. Keep the model listener on loopback. The
+local service makes outbound HTTPS calls only; no inbound router port is needed.
+
+1. Run a macOS launchd service after login with restart-on-failure and a heartbeat.
+   Reboot, sleep, network loss and FileVault/login recovery need a real recovery test;
+   an agent cannot collect while the Mac is off or asleep. Run bounded jobs on a
+   schedule rather than keeping an LLM generating continuously.
+2. Use local SQLite for durable jobs keyed by region + source + time window,
+   including next_run_at, lease_expires_at, attempts, last_success_at, error_class,
+   content_hash and parser_version. Expired leases recover interrupted jobs.
+   Serial work per host, low concurrency across hosts, jittered exponential backoff,
+   robots checks and Retry-After protect sources and prevent retry loops.
+3. Prefer JSON-LD, ICS, RSS and venue-specific parsers. Use local Ollama/Qwen for
+   ambiguous text and a local vision model for posters only when necessary. Request
+   JSON matching the event schema, then validate independently. Never fill an unknown
+   date, year or show start with a guess; doors and opening hours remain separate.
+   Select model size after checking the mini's RAM and measuring extraction quality.
+4. Add narrowly scoped agent endpoints to read pending submissions and write
+   enrichment proposals/tags. Current agent tokens only read sources and ingest
+   candidates; they cannot yet read or triage existing submissions. Keep the service
+   credential outside the repository, revoke/rotate it, and never give it admin login,
+   deployment credentials, arbitrary SQL or publication rights. Treat all crawled text
+   as data, including instructions embedded in pages and posters.
+5. Reconcile against every moderation status before insertion using stable source
+   occurrence IDs, normalized venue/title/date and a unique idempotency key. Preserve
+   rejected records as suppression history. Recheck approved events for cancellation
+   or changed times; route changes to review instead of silently overwriting them.
+6. Separate evidence completeness, extraction conflicts, source reliability and
+   editorial relevance. The existing 0–100 score is evidence coverage, not accuracy
+   probability. Group recurring series, suppress exact repeats, quarantine spam, and
+   show the reviewer only new events, material changes and real conflicts. A source
+   fetch failure must not be treated as an event cancellation.
+7. Start with human bulk approval. Unattended collection/enrichment can run with the
+   publication gate intact. Any future automatic publishing needs a separately
+   authorized, narrowly scoped policy for tested sources, dated evidence, no conflicts,
+   duplicate checks and rollback. A model score alone must never grant publication.
+8. Store fresh captures and verbose logs locally with a disk limit and retention;
+   keep concise evidence/provenance in D1. Set daily page, byte, model-runtime and
+   ingestion budgets below platform quotas. Version adapters and record changed-page
+   health. Surface stale heartbeat, failing sources, queue growth, storage pressure
+   and quota exhaustion in admin; configure one notification destination only after
+   the owner selects it. Keep quiet on unchanged healthy runs.
+9. Back up local job state and D1 privately; test restore and restart without duplicate
+   submissions. Gate releases with fixtures for concatenated concerts, recurring
+   exceptions, multi-day festivals, DST, missing time, cancellations, wrong city/year,
+   hostile source text, failed fetches and replayed ingestion requests.
+
+Suggested initial cadence: pending-submission checks every 15 minutes; known event
+feeds every 6 hours; approved events in the next 14 days daily; venue discovery
+monthly. Tune after measuring source update frequency and actual review volume.
+This is a proposed cadence, not an installed schedule.
+
+Costs: local inference avoids per-token API bills. Electricity, domain renewal,
+backups and any optional notification service remain separate. Keep paid search,
+paid scraping and cloud inference disabled by default. Cloudflare free-tier quotas
+are capacity limits, not a guaranteed dollar cap; verify account plans and configure
+usage alerts. Expensive D1 snapshots and high-frequency polling should be measured.
+
+References checked October 30, 2026:
+- https://developers.cloudflare.com/cloudflare-one/integrations/identity-providers/one-time-pin/
+- https://developers.cloudflare.com/cloudflare-one/access-controls/applications/http-apps/authorization-cookie/application-token/
+- https://ollama.com/library/qwen3:8b

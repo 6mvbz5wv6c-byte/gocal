@@ -1,3 +1,4 @@
+import {decisionReason} from './moderation.js';
 import {sessionIssues} from '../src/lib/civic-schedule.js';
 import {buildSourceSummary} from './source-summary.js';
 import {verifyChallenge} from './spam.js';
@@ -86,13 +87,12 @@ async function route(req,env,ctx){const p=new URL(req.url).pathname;const method
  if(action==='enrich'&&previous.status!=='pending')fail(409,'Only pending records can be enriched.');
  const status={save:'pending',approve:'approved',reject:'rejected',remove:'removed',enrich:'pending'}[action];
  if(action==='approve'&&b.confirmed!==true)fail(400,'Explicit review confirmation required.');
- const e=eventInput(b.event,action==='approve'),reason=text(b,'reason',1500);let research;try{research=validateResearch(b.event.research);}catch(err){fail(400,err.message);}
+ const e=eventInput(b.event,action==='approve'),reason=decisionReason(action,mapEvent(previous),e,text(b,'reason',1500));let research;try{research=validateResearch(b.event.research);}catch(err){fail(400,err.message);}
  const priorClaims=(await sql(env,'SELECT field,quote,method FROM event_evidence WHERE event_id=? AND revision=?',eventId,b.revision).all()).results;
  const prior=mapEvent(previous),retainedClaims=priorClaims.filter(c=>JSON.stringify(e[c.field])===JSON.stringify(prior[c.field]));
  if(research){e.uncertainFields=[...new Set([...e.uncertainFields,...research.claims.filter(c=>c.method==='inferred').map(c=>c.field)])];}
  if(action==='approve'&&reviewIssues(e).length)fail(400,'Resolve flagged fields before approval.');
  e.score=evidenceQuality(e,research?research.claims:retainedClaims);
- if(action!=='reject'&&action!=='enrich'&&mapEvent(previous).uncertainFields.some(f=>!e.uncertainFields.includes(f))&&!reason)fail(400,'A verification note is required when confirming uncertain fields.');
  const oldEvent=mapEvent(previous);if(!e.sourceSummary||(e.sourceSummary===oldEvent.sourceSummary&&(['title','date','time','endTime','endDate','allDay','scheduleNote','civicNotice','locationUrl','venue','address'].some(k=>e[k]!==oldEvent[k])||JSON.stringify(e.uncertainFields)!==JSON.stringify(oldEvent.uncertainFields)||JSON.stringify(e.sessions)!==JSON.stringify(oldEvent.sessions))))e.sourceSummary=buildSourceSummary(e,research?.snapshots||[]);
  const timestamp=now(),runId=research?id():null,next=b.revision+1,decisionId=id();
  const batch=[sql(env,'UPDATE events SET title=?,date=?,time=?,end_time=?,end_date=?,all_day=?,schedule_note=?,venue=?,address=?,category=?,price=?,description=?,source_summary=?,source=?,evidence=?,score=?,status=?,fingerprint=?,revision=revision+1,updated_at=?,reviewed_by=?,reviewed_at=? WHERE id=? AND revision=?',e.title,e.date,e.time,e.endTime||null,e.endDate||null,e.allDay?1:0,e.scheduleNote,e.venue,e.address,e.category,e.price,e.description,e.sourceSummary||'',e.source,e.evidence,e.score,status,await fingerprint(e),timestamp,action==='enrich'?previous.reviewed_by:u.id,action==='enrich'?previous.reviewed_at:timestamp,eventId,b.revision),
